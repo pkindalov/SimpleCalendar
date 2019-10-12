@@ -1,0 +1,13 @@
+th{
+    border:1px solid black;
+}
+
+th,td {
+    padding: 5px;
+    text-align: center;
+}
+
+.hightlight{
+    background-color: coral;
+}
+
