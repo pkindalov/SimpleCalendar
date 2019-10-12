@@ -1,6 +1,5 @@
-let container = document.getElementById("container");
-// container.innerHTML = "<h1>Works</h1>";
-
+const LANGUAGE = 'bg';
+let container = document.getElementById("simpleCalendarContainer");
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme(month) {
@@ -53,19 +52,38 @@ function getSeasonTheme(month) {
 }
 
 //functions about generating calendar
-function genCalTopRow(seasonTheme) {
-    return `<table class=${seasonTheme} id="calendar">
-      <tr>
-        <th>Пон.</th>
-        <th>Вто.</th>
-        <th>Сря.</th>
-        <th>Чет.</th>
-        <th>Пет.</th>
-        <th>Съб.</th>
-        <th>Нед.</th>
-      </tr>
-    </table>  
-    `;
+function genCalTopRow(seasonTheme, LANGUAGE) {
+    switch (LANGUAGE) {
+        case 'bg':
+            return `<table class=${seasonTheme} id="simpleCalendar">
+              <tr>
+                <th>Пон.</th>
+                <th>Вто.</th>
+                <th>Сря.</th>
+                <th>Чет.</th>
+                <th>Пет.</th>
+                <th>Съб.</th>
+                <th>Нед.</th>
+              </tr>
+            </table>  
+            `;
+            break;
+        case 'en':
+            return `<table class=${seasonTheme} id="simpleCalendar">
+                  <tr>
+                    <th>Mon.</th>
+                    <th>Tue.</th>
+                    <th>Wed.</th>
+                    <th>Thu.</th>
+                    <th>Fri.</th>
+                    <th>Sat.</th>
+                    <th>Sun.</th>
+                  </tr>
+                </table>  
+                `;
+            break;
+
+    }
 }
 
 function genCalSecondRow(table, month, year, todayDate, emptyCols) {
@@ -154,32 +172,19 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
     const CURRENT_MONTH_DAYS = parseInt(
         new Date(year, month + 1, 0).toString().split(" ")[2]
     );
-    // alert(CURRENT_MONTH_DAYS);
     const WRITED_CELLS_IN_CALENDAR = 7;
     const CELLS_TO_DRAW = CURRENT_MONTH_DAYS - (WRITED_CELLS_IN_CALENDAR - emptyCols);
-    // alert(CELLS_TO_DRAW);
     let dynamicRow = "";
 
     for (let i = 0; i < CELLS_TO_DRAW; i++) {
         if (i % 7 == 0) {
-            // console.log(i + " in -> " + dateNum);
-            // console.log(i);
             dynamicRow = table.insertRow();
-
-            // table.innerHTML += `</tr>`;
-            // let dynamicRow = table.insertRow();
-            // dynamicRow.innerHTML = `<td>${dateNum++}</td>`;
         }
-        // dynamicRow.insertCell(i);
         if (dateNum == todayDate) {
             dynamicRow.innerHTML += `<td class="${seasonTheme}Hightlight">${dateNum}</td>`;
         } else {
-            // if (dateNum < 32) {
-            // }
             dynamicRow.innerHTML += `<td>${dateNum}</td>`;
-            // console.log(i + " -> " + dateNum);
         }
-
         dateNum++;
 
     }
@@ -187,9 +192,9 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
 
 let month = new Date().getMonth();
 let seasonTheme = getSeasonTheme(month + 1);
-let calendarTopRow = genCalTopRow(seasonTheme);
+let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE);
 container.innerHTML += calendarTopRow;
-let table = document.getElementById("calendar");
+let table = document.getElementById("simpleCalendar");
 let year = new Date().getFullYear();
 let todayDate = new Date().getDate();
 let firstDayOfMonth = new Date(year, month, 1).toString();
