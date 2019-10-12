@@ -57,13 +57,13 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
         case 'bg':
             return `<table class=${seasonTheme} id="simpleCalendar">
               <tr>
-                <th>Пон.</th>
-                <th>Вто.</th>
-                <th>Сря.</th>
-                <th>Чет.</th>
-                <th>Пет.</th>
-                <th>Съб.</th>
-                <th>Нед.</th>
+                <th id="Mon">Пон.</th>
+                <th id="Tue">Вто.</th>
+                <th id="Wed">Сря.</th>
+                <th id="Thu">Чет.</th>
+                <th id="Fri">Пет.</th>
+                <th id="Sat">Съб.</th>
+                <th id="Sun">Нед.</th>
               </tr>
             </table>  
             `;
@@ -71,13 +71,13 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
         case 'en':
             return `<table class=${seasonTheme} id="simpleCalendar">
                   <tr>
-                    <th>Mon.</th>
-                    <th>Tue.</th>
-                    <th>Wed.</th>
-                    <th>Thu.</th>
-                    <th>Fri.</th>
-                    <th>Sat.</th>
-                    <th>Sun.</th>
+                    <th id="Mon">Mon.</th>
+                    <th id="Tue">Tue.</th>
+                    <th id="Wed">Wed.</th>
+                    <th id="Thu">Thu.</th>
+                    <th id="Fri">Fri.</th>
+                    <th id="Sat">Sat.</th>
+                    <th id="Sun">Sun.</th>
                   </tr>
                 </table>  
                 `;
@@ -88,57 +88,31 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
 
 function genCalSecondRow(table, month, year, todayDate, emptyCols) {
     const DAYS_COUNT = 7;
-    let startDate = 1;
-    // let firstDayOfMonth = new Date(year, month, 1).toString();
-    // let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
-    // let emptyCols = calcEmptyCols(dayName);
+    let startDate = 0;
     let secondRow = table.insertRow();
-    let textNode = "";
-
-
-
     for (let i = 0; i < DAYS_COUNT; i++) {
         if (i < emptyCols) {
-            //   console.log(i);
-            // secondRow.insertCell();
-            //   textNode = document.createTextNode(` `);
-            //   secondRow.appendChild(textNode);
-            secondRow.innerHTML += `<td></td>`;
+            secondRow.innerHTML += `<td class="emptyCell"></td>`;
         } else {
-            // secondRow.insertCell();
-            // textNode = document.createTextNode(`${startDate++}`);
-            // secondRow.appendChild(textNode);
             if (todayDate == startDate) {
-                secondRow.innerHTML += `<td class="hightlight">${startDate++}</td>`;
+                secondRow.innerHTML += `<td id="${startDate}" class="hightlight">${startDate}</td>`;
             } else {
-                secondRow.innerHTML += `<td>${startDate++}</td>`;
+                secondRow.innerHTML += `<td id="${startDate}">${startDate}</td>`;
             }
         }
-        // for (let e = 0; e < emptyCols; e++) {
-        //   row += `<td></td>`;
-        // }
-        // return startDate;
-        // row += `<td>${i}</td>`;
+        startDate++;
     }
-
-    //   row += `</tr>`;
-    //   console.log(row);
-
-    //   return row;
-    // alert(startDate + " " + dayName + " " + emptyCols);
     return startDate;
 }
 
 function getDayName(dayNum) {
     let weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
     let pos = weekDays.indexOf(dayNum);
     return weekDays[pos];
 }
 
 function calcEmptyCols(dayName) {
     let emptyCols = 0;
-
     switch (dayName) {
         case "Mon":
             emptyCols = 0;
@@ -164,7 +138,6 @@ function calcEmptyCols(dayName) {
         default:
             throw error("No valid dayName");
     }
-
     return emptyCols;
 }
 
@@ -181,12 +154,11 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
             dynamicRow = table.insertRow();
         }
         if (dateNum == todayDate) {
-            dynamicRow.innerHTML += `<td class="${seasonTheme}Hightlight">${dateNum}</td>`;
+            dynamicRow.innerHTML += `<td id="${dateNum}" class="${seasonTheme}Hightlight">${dateNum}</td>`;
         } else {
-            dynamicRow.innerHTML += `<td>${dateNum}</td>`;
+            dynamicRow.innerHTML += `<td id="${dateNum}">${dateNum}</td>`;
         }
         dateNum++;
-
     }
 }
 
