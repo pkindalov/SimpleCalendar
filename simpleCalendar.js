@@ -17,29 +17,16 @@ function genCalTopRow() {
     `;
 }
 
-function genCalSecondRow() {
+function genCalSecondRow(table, month, year, todayDate, emptyCols) {
     const DAYS_COUNT = 7;
-    // var FirstDay = new Date(2019, 10, 1);
-    let year = new Date().getFullYear();
-    let month = new Date().getMonth();
-    let firstDayOfMonth = new Date(year, month, 1).toString();
-    // alert(firstDayOfMonth);
-    // alert(month);
-    //   let row = `<tr>`;
-    // let dayName = getDayName(new Date().getDay());
-    let dayName = getDayName(firstDayOfMonth.split(' ')[0]);
-    // alert(dayName);
-    // return;
     let startDate = 1;
-    let todayDate = new Date().getDate();
-    let emptyCols = calcEmptyCols(dayName);
-    // let indexWriteDaysNumBegin = startDate - emptyCols;
-    // alert(emptyCols);
-    let table = document.getElementById("calendar");
+    // let firstDayOfMonth = new Date(year, month, 1).toString();
+    // let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
+    // let emptyCols = calcEmptyCols(dayName);
     let secondRow = table.insertRow();
     let textNode = "";
 
-    // alert(FirstDay);
+
 
     for (let i = 0; i < DAYS_COUNT; i++) {
         if (i < emptyCols) {
@@ -74,22 +61,13 @@ function genCalSecondRow() {
 }
 
 function getDayName(dayNum) {
-    let weekDays = [
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-        "Sun"
-    ];
+    let weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
     let pos = weekDays.indexOf(dayNum);
     return weekDays[pos];
 }
 
 function calcEmptyCols(dayName) {
-
     let emptyCols = 0;
 
     switch (dayName) {
@@ -121,13 +99,51 @@ function calcEmptyCols(dayName) {
     return emptyCols;
 }
 
-let calendarTopRow = genCalTopRow();
+function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
+    const CURRENT_MONTH_DAYS = parseInt(
+        new Date(year, month + 1, 0).toString().split(" ")[2]
+    );
+    // alert(CURRENT_MONTH_DAYS);
+    const WRITED_CELLS_IN_CALENDAR = 7;
+    const CELLS_TO_DRAW = CURRENT_MONTH_DAYS - (WRITED_CELLS_IN_CALENDAR - emptyCols);
+    // alert(CELLS_TO_DRAW);
+    let dynamicRow = "";
 
+    for (let i = 0; i < CELLS_TO_DRAW; i++) {
+        if (i % 7 == 0) {
+            // console.log(i + " in -> " + dateNum);
+            // console.log(i);
+            dynamicRow = table.insertRow();
+
+            // table.innerHTML += `</tr>`;
+            // let dynamicRow = table.insertRow();
+            // dynamicRow.innerHTML = `<td>${dateNum++}</td>`;
+        }
+        // dynamicRow.insertCell(i);
+        if (dateNum == todayDate) {
+            dynamicRow.innerHTML += `<td class="hightlight">${dateNum}</td>`;
+        } else {
+            // if (dateNum < 32) {
+            // }
+            dynamicRow.innerHTML += `<td>${dateNum}</td>`;
+            // console.log(i + " -> " + dateNum);
+        }
+
+        dateNum++;
+
+    }
+}
+
+let calendarTopRow = genCalTopRow();
 container.innerHTML += calendarTopRow;
-let dateNum = genCalSecondRow();
-alert(dateNum);
-// alert(fromWhichNumToBeginTableBody);
-// container.innerHTML += secondRow;
-// let table = document.getElementById("calendar");
-// let secondRow = table.insertRow(1);
-// let secondRowCelss =
+
+let table = document.getElementById("calendar");
+let year = new Date().getFullYear();
+let month = new Date().getMonth();
+let todayDate = new Date().getDate();
+let firstDayOfMonth = new Date(year, month, 1).toString();
+let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
+let emptyCols = calcEmptyCols(dayName);
+let dateNum = genCalSecondRow(table, month, year, todayDate, emptyCols);
+
+genTableBody(dateNum, table, month, year, todayDate, emptyCols);
