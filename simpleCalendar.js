@@ -1,60 +1,71 @@
-const LANGUAGE = 'bg';
+const LANGUAGE = "bg";
 let container = document.getElementById("simpleCalendarContainer");
+let month = new Date().getMonth();
+let seasonTheme = getSeasonTheme(month + 1);
+let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE);
+container.innerHTML += calendarTopRow;
+let table = document.getElementById("simpleCalendar");
+let year = new Date().getFullYear();
+let todayDate = new Date().getDate();
+let firstDayOfMonth = new Date(year, month, 1).toString();
+let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
+let emptyCols = calcEmptyCols(dayName);
+let dateNum = genCalSecondRow(table, month, year, todayDate, emptyCols);
+
+genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme);
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme(month) {
-    let theme = 'january';
-
+    let theme = "january";
     switch (month) {
         case 1:
-            theme = 'january';
+            theme = "january";
             break;
         case 2:
-            theme = 'february';
+            theme = "february";
             break;
         case 3:
-            theme = 'march';
+            theme = "march";
             break;
         case 4:
-            theme = 'april';
+            theme = "april";
             break;
         case 5:
-            theme = 'may';
+            theme = "may";
             break;
         case 6:
-            theme = 'june';
+            theme = "june";
             break;
         case 7:
-            theme = 'july';
+            theme = "july";
             break;
         case 8:
-            theme = 'august';
+            theme = "august";
             break;
         case 9:
-            theme = 'september';
+            theme = "september";
             break;
         case 10:
-            theme = 'october';
+            theme = "october";
             break;
         case 11:
-            theme = 'november';
+            theme = "november";
             break;
         case 12:
-            theme = 'december';
+            theme = "december";
             break;
         default:
-            theme = 'january';
+            theme = "january";
             break;
     }
-
     return theme;
-
 }
 
 //functions about generating calendar
+//Following function generate first row of the table with the name of the days
 function genCalTopRow(seasonTheme, LANGUAGE) {
     switch (LANGUAGE) {
-        case 'bg':
+        case "bg":
             return `<table class=${seasonTheme} id="simpleCalendar">
               <tr>
                 <th id="Mon">Пон.</th>
@@ -68,7 +79,7 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
             </table>  
             `;
             break;
-        case 'en':
+        case "en":
             return `<table class=${seasonTheme} id="simpleCalendar">
                   <tr>
                     <th id="Mon">Mon.</th>
@@ -82,10 +93,10 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
                 </table>  
                 `;
             break;
-
     }
 }
 
+//Generate second row of the table. Use variable emptyCols to draw empty cells in depends when is the first day of the month. For example if the first day of the month is monday, then the value of the empyCols is 0. If the first day is tusday, then monday is empty so the value of the emptyCols is 1. If the first day is wednesday, then before this day there are two empty days - monday and tuesday, so the valye of emptyCols is 2 and so on...
 function genCalSecondRow(table, month, year, todayDate, emptyCols) {
     const DAYS_COUNT = 7;
     let startDate = 0;
@@ -105,12 +116,14 @@ function genCalSecondRow(table, month, year, todayDate, emptyCols) {
     return startDate;
 }
 
+//Helper function to return name of the day depends of the number.
 function getDayName(dayNum) {
     let weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     let pos = weekDays.indexOf(dayNum);
     return weekDays[pos];
 }
 
+//Helper function to return how many empty cells must be available on the second row on the table depending when is the first day of the month. If the first day of the month is monday, then there is 0 empty cells. If first day is thursday for example, then there are 3 empty cell in the second row - monday, tuesday and wednesday must be empty.
 function calcEmptyCols(dayName) {
     let emptyCols = 0;
     switch (dayName) {
@@ -141,16 +154,18 @@ function calcEmptyCols(dayName) {
     return emptyCols;
 }
 
+//Render the the last part of the table - it's body.
 function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
     const CURRENT_MONTH_DAYS = parseInt(
         new Date(year, month + 1, 0).toString().split(" ")[2]
     );
     const WRITED_CELLS_IN_CALENDAR = 7;
-    const CELLS_TO_DRAW = CURRENT_MONTH_DAYS - (WRITED_CELLS_IN_CALENDAR - emptyCols);
+    const CELLS_TO_DRAW =
+        CURRENT_MONTH_DAYS - (WRITED_CELLS_IN_CALENDAR - emptyCols);
     let dynamicRow = "";
 
     for (let i = 0; i < CELLS_TO_DRAW; i++) {
-        if (i % 7 == 0) {
+        if (i % WRITED_CELLS_IN_CALENDAR == 0) {
             dynamicRow = table.insertRow();
         }
         if (dateNum == todayDate) {
@@ -161,17 +176,3 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
         dateNum++;
     }
 }
-
-let month = new Date().getMonth();
-let seasonTheme = getSeasonTheme(month + 1);
-let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE);
-container.innerHTML += calendarTopRow;
-let table = document.getElementById("simpleCalendar");
-let year = new Date().getFullYear();
-let todayDate = new Date().getDate();
-let firstDayOfMonth = new Date(year, month, 1).toString();
-let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
-let emptyCols = calcEmptyCols(dayName);
-let dateNum = genCalSecondRow(table, month, year, todayDate, emptyCols);
-
-genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme);
