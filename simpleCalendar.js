@@ -10,7 +10,7 @@ let todayDate = new Date().getDate();
 let firstDayOfMonth = new Date(year, month, 1).toString();
 let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
 let emptyCols = calcEmptyCols(dayName);
-let dateNum = genCalSecondRow(table, month, year, todayDate, emptyCols);
+let dateNum = genCalSecondRow(table, month, year, todayDate, emptyCols, seasonTheme);
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme(month) {
@@ -95,13 +95,18 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
 }
 
 //Generate second row of the table. Use variable emptyCols to draw empty cells in depends when is the first day of the month. For example if the first day of the month is monday, then the value of the empyCols is 0. If the first day is tusday, then monday is empty so the value of the emptyCols is 1. If the first day is wednesday, then before this day there are two empty days - monday and tuesday, so the valye of emptyCols is 2 and so on...
-function genCalSecondRow(table, month, year, todayDate, emptyCols) {
+function genCalSecondRow(table, month, year, todayDate, emptyCols, seasonTheme) {
     const DAYS_COUNT = 7;
     let startDate = 1;
     let secondRow = table.insertRow();
+    let previousMont = new Date(year, month, 0) + " ";
+    let previousMontDays = parseInt(previousMont.split(" ")[2]);
+    let prevMontStart = (previousMontDays + 1) - emptyCols;
+
     for (let i = 0; i < DAYS_COUNT; i++) {
         if (i < emptyCols) {
-            secondRow.innerHTML += `<td class="emptyCell"></td>`;
+            secondRow.innerHTML += `<td class="${seasonTheme}Disabled">${prevMontStart}</td>`;
+            prevMontStart++;
         } else {
             if (todayDate == startDate) {
                 secondRow.innerHTML += `<td id="${startDate}" class="hightlight">${startDate}</td>`;
@@ -153,7 +158,7 @@ function calcEmptyCols(dayName) {
 }
 
 function genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme) {
-    let currentDate = new Date(year, month + 1, 0) + " "
+    let currentDate = new Date(year, month + 1, 0) + " ";
     let countDays = parseInt(currentDate.split(" ")[2]);
     let tr = '';
     let td = '';
@@ -167,8 +172,14 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonT
         if (i % 7 == 0) {
             tr = table.insertRow();
         }
-
         td = tr.insertCell();
+
+        // if (i < emptyCols) {
+        //     // td = tr.insertCell();
+        //     td.innerHTML = `${prevMontStart}dfdsfsdf`;
+        //     prevMontStart++;
+        // }
+
         // if (i < emptyCols) {
         //     td.innerHTML = ``;
         //     //  td.setAttribute(`class`, `${seasonTheme}Hightlight`);
