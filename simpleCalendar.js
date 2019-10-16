@@ -10,7 +10,14 @@ let todayDate = new Date().getDate();
 let firstDayOfMonth = new Date(year, month, 1).toString();
 let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
 let emptyCols = calcEmptyCols(dayName);
-let dateNum = genCalSecondRow(table, month, year, todayDate, emptyCols, seasonTheme);
+let dateNum = genCalSecondRow(
+    table,
+    month,
+    year,
+    todayDate,
+    emptyCols,
+    seasonTheme
+);
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme(month) {
@@ -95,24 +102,45 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
 }
 
 //Generate second row of the table. Use variable emptyCols to draw empty cells in depends when is the first day of the month. For example if the first day of the month is monday, then the value of the empyCols is 0. If the first day is tusday, then monday is empty so the value of the emptyCols is 1. If the first day is wednesday, then before this day there are two empty days - monday and tuesday, so the valye of emptyCols is 2 and so on...
-function genCalSecondRow(table, month, year, todayDate, emptyCols, seasonTheme) {
+function genCalSecondRow(
+    table,
+    month,
+    year,
+    todayDate,
+    emptyCols,
+    seasonTheme
+) {
     const DAYS_COUNT = 7;
     let startDate = 1;
-    let secondRow = table.insertRow();
     let previousMont = new Date(year, month, 0) + " ";
     let previousMontDays = parseInt(previousMont.split(" ")[2]);
-    let prevMontStart = (previousMontDays + 1) - emptyCols;
+    let prevMontStart = previousMontDays + 1 - emptyCols;
+    let secondRow = table.insertRow();
 
     for (let i = 0; i < DAYS_COUNT; i++) {
         if (i < emptyCols) {
-            secondRow.innerHTML += `<td class="${seasonTheme}Disabled">${prevMontStart}</td>`;
+            let newTd = secondRow.insertCell();
+            newTd.innerHTML = `${prevMontStart}`;
+            newTd.setAttribute('class', `${seasonTheme}Disabled`);
+            // secondRow.innerHTML += `<td class="${seasonTheme}Disabled">${prevMontStart}</td>`;
             prevMontStart++;
         } else {
             if (todayDate == startDate) {
-                secondRow.innerHTML += `<td id="${startDate}" class="hightlight">${startDate}</td>`;
+                let anotherTd = secondRow.insertCell();
+                anotherTd.innerHTML = `${startDate}`;
+                anotherTd.setAttribute('class', `${seasonTheme}Hightlight`)
+                another.onclick = e => showDate(e);
+                // secondRow.innerHTML += `<td id="${startDate}" class="hightlight">${startDate}</td>`;
+                // secondRow.onclick = e => showDate(e);
             } else {
-                secondRow.innerHTML += `<td id="${startDate}">${startDate}</td>`;
+                let thirdCell = secondRow.insertCell();
+                thirdCell.innerHTML = `${startDate}`;
+                thirdCell.onclick = e => showDate(e);
+
+                // secondRow.innerHTML += `<td id="${startDate}">${startDate}</td>`;
+                // secondRow.onclick = e => showDate(e);
             }
+
             startDate++;
         }
     }
@@ -157,14 +185,22 @@ function calcEmptyCols(dayName) {
     return emptyCols;
 }
 
-function genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme) {
+function genTableBody(
+    dateNum,
+    table,
+    month,
+    year,
+    todayDate,
+    emptyCols,
+    seasonTheme
+) {
     let currentDate = new Date(year, month + 1, 0) + " ";
     let countDays = parseInt(currentDate.split(" ")[2]);
     let currentMonthDays = countDays;
     let lastDayOfMonthName = currentDate.split(" ")[0];
     // alert(currentDate);
-    let tr = '';
-    let td = '';
+    let tr = "";
+    let td = "";
     let pastTheMont = false;
 
     if (lastDayOfMonthName == "Mon" && countDays == 31) {
@@ -219,6 +255,7 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonT
         //     //  td.setAttribute(`class`, `${seasonTheme}Hightlight`);
         // } else {
         // }
+        td.onclick = e => showDate(e);
 
         if (dateNum == todayDate) {
             td.innerHTML = `${dateNum}`;
@@ -227,17 +264,18 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonT
             td.innerHTML = `${dateNum}`;
             if (pastTheMont) {
                 td.setAttribute(`class`, `day${dateNum} ${seasonTheme}Disabled`);
-
             } else {
                 td.setAttribute(`class`, `day${dateNum}`);
-
             }
         }
 
         dateNum++;
     }
-
 }
 
+function showDate(e) {
+    console.log(e.target.innerHTML);
+    // alert(num);
+}
 
 genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme);
