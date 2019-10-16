@@ -1,11 +1,11 @@
 const LANGUAGE = "bg";
 let container = document.getElementById("simpleCalendarContainer");
 let month = new Date().getMonth();
+let year = new Date().getFullYear();
 let seasonTheme = getSeasonTheme(month + 1);
-let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE);
+let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE, month, year);
 container.innerHTML += calendarTopRow;
 let table = document.getElementById("simpleCalendar");
-let year = new Date().getFullYear();
 let todayDate = new Date().getDate();
 let firstDayOfMonth = new Date(year, month, 1).toString();
 let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
@@ -66,12 +66,30 @@ function getSeasonTheme(month) {
     return theme;
 }
 
+function prevMonth(month, year) {
+    // alert(month + ' ' + year);
+    // let topRow = genCalTopRow(seasonTheme, LANGUAGE, month, year);
+    // let container = document.getElementById("simpleCalendarContainer");
+    // container.innerHTML = '';
+    // container.innerHTML += topRow;
+    // month--;
+}
+
+function nextMonth(month, year) {
+    alert(month + 2 + ' ' + year);
+}
+
 //functions about generating calendar
 //Following function generate first row of the table with the name of the days
-function genCalTopRow(seasonTheme, LANGUAGE) {
+function genCalTopRow(seasonTheme, LANGUAGE, month, year) {
+
+    let monthName = getCurrentMonthName(LANGUAGE, month, year);
+
+
     switch (LANGUAGE) {
         case "bg":
             return `<table class=${seasonTheme} id="simpleCalendar">
+              <tr><th colspan="7"><a onclick="prevMonth(month, year, seasonTheme, LANGUAGE);" style="color: orange" href="#">&lt;</a>${monthName}<a onclick="nextMonth(month, year);" style="color: orange" href="#">&gt;</a></th></tr>  
               <tr>
                 <th id="Mon">Пон.</th>
                 <th id="Tue">Вто.</th>
@@ -86,6 +104,7 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
             break;
         case "en":
             return `<table class=${seasonTheme} id="simpleCalendar">
+                 <tr><th colspan="7">${monthName}</th></tr>  
                   <tr>
                     <th id="Mon">Mon.</th>
                     <th id="Tue">Tue.</th>
@@ -99,6 +118,93 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
                 `;
             break;
     }
+}
+
+function getCurrentMonthName(LANGUAGE, month, year) {
+    let currentDate = new Date(year, month + 1, 0) + " ";
+    let monthName = currentDate.split(" ")[1];
+
+    if (LANGUAGE == "bg") {
+        switch (monthName) {
+            case "Jan":
+                monthName = "Януари";
+                break;
+            case "Feb":
+                monthName = "Февруари";
+                break;
+            case "Mar":
+                monthName = "Март";
+                break;
+            case "Apr":
+                monthName = "Април";
+                break;
+            case "May":
+                monthName = "Май";
+                break;
+            case "Jun":
+                monthName = "Юни";
+                break;
+            case "Jul":
+                monthName = "Юли";
+                break;
+            case "Aug":
+                monthName = "Август";
+                break;
+            case "Sep":
+                monthName = "Септември";
+                break;
+            case "Oct":
+                monthName = "Октомври";
+                break;
+            case "Nov":
+                monthName = "Ноември";
+                break;
+            case "Dec":
+                monthName = "Декември";
+                break;
+        }
+    } else {
+        switch (monthName) {
+            case "Jan":
+                monthName = "January";
+                break;
+            case "Feb":
+                monthName = "February";
+                break;
+            case "Mar":
+                monthName = "March";
+                break;
+            case "Apr":
+                monthName = "April";
+                break;
+            case "May":
+                monthName = "May";
+                break;
+            case "Jun":
+                monthName = "June";
+                break;
+            case "Jul":
+                monthName = "July";
+                break;
+            case "Aug":
+                monthName = "August";
+                break;
+            case "Sep":
+                monthName = "September";
+                break;
+            case "Oct":
+                monthName = "October";
+                break;
+            case "Nov":
+                monthName = "November";
+                break;
+            case "Dec":
+                monthName = "December";
+                break;
+        }
+    }
+
+    return monthName;
 }
 
 //Generate second row of the table. Use variable emptyCols to draw empty cells in depends when is the first day of the month. For example if the first day of the month is monday, then the value of the empyCols is 0. If the first day is tusday, then monday is empty so the value of the emptyCols is 1. If the first day is wednesday, then before this day there are two empty days - monday and tuesday, so the valye of emptyCols is 2 and so on...
