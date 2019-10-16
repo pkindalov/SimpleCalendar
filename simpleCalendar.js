@@ -235,14 +235,15 @@ function genTableBody(
     // }
 
     for (let i = 0; i < countDays; i++) {
+        if (i % 7 == 0) {
+            tr = table.insertRow();
+        }
         if (dateNum > currentMonthDays || dateNum > 31) {
             dateNum = 1;
             pastTheMont = true;
         }
-        if (i % 7 == 0) {
-            tr = table.insertRow();
-        }
-        td = tr.insertCell();
+
+        // td = tr.insertCell();
 
         // if (i < emptyCols) {
         //     // td = tr.insertCell();
@@ -255,17 +256,22 @@ function genTableBody(
         //     //  td.setAttribute(`class`, `${seasonTheme}Hightlight`);
         // } else {
         // }
-        td.onclick = e => showDate(e);
 
         if (dateNum == todayDate) {
-            td.innerHTML = `${dateNum}`;
-            td.setAttribute(`class`, `${seasonTheme}Hightlight`);
+            let todayCell = tr.insertCell();
+            todayCell.innerHTML = `${dateNum}`;
+            todayCell.setAttribute(`class`, `${seasonTheme}Hightlight`);
+            todayCell.onclick = e => showDate(e);
         } else {
-            td.innerHTML = `${dateNum}`;
+            let todayCell = tr.insertCell();
+            todayCell.innerHTML = `${dateNum}`;
             if (pastTheMont) {
-                td.setAttribute(`class`, `day${dateNum} ${seasonTheme}Disabled`);
+                // let disabledDatesCell = tr.insertCell();
+                todayCell.innerHTML = `${dateNum}`;
+                todayCell.setAttribute(`class`, `day${dateNum} ${seasonTheme}Disabled`);
             } else {
-                td.setAttribute(`class`, `day${dateNum}`);
+                todayCell.onclick = e => showDate(e);
+                todayCell.setAttribute(`class`, `day${dateNum}`);
             }
         }
 
