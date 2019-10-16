@@ -15,6 +15,11 @@ td {
     border-radius: 5px;
 }
 
+td:hover{
+    background-color: #381e1d;
+    cursor: pointer;
+}
+
 .hightlight {
     background-color: coral;
 }
