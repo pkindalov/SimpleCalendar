@@ -160,12 +160,46 @@ function calcEmptyCols(dayName) {
 function genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme) {
     let currentDate = new Date(year, month + 1, 0) + " ";
     let countDays = parseInt(currentDate.split(" ")[2]);
+    let currentMonthDays = countDays;
+    let lastDayOfMonthName = currentDate.split(" ")[0];
+    // alert(currentDate);
     let tr = '';
     let td = '';
     let pastTheMont = false;
 
+    if (lastDayOfMonthName == "Mon" && countDays == 31) {
+        countDays += 11;
+    } else if (lastDayOfMonthName == "Mon" && countDays == 30) {
+        countDays += 12;
+    } else if (lastDayOfMonthName == "Tue" && countDays == 31) {
+        countDays += 11;
+    } else if (lastDayOfMonthName == "Tue" && countDays == 30) {
+        countDays += 5;
+    } else if (lastDayOfMonthName == "Wed" && countDays == 31) {
+        countDays += 4;
+    } else if (lastDayOfMonthName == "Wed" && countDays == 30) {
+        countDays += 5;
+    } else if (lastDayOfMonthName == "Thu" && countDays == 31) {
+        countDays += 4;
+    } else if (lastDayOfMonthName == "Thu" && countDays == 30) {
+        countDays += 3;
+    }
+
+    // alert(countDays);
+    // switch (lastDayOfMonthName) {
+    //     case 'Mon':
+    //         countDays += 11;
+    //         break;
+    //     case 'Tue':
+    //         countDays += 11;
+    //         break;
+    //     case 'Thu':
+    //         countDays += 4;
+    //         break;
+    // }
+
     for (let i = 0; i < countDays; i++) {
-        if (dateNum > countDays) {
+        if (dateNum > currentMonthDays || dateNum > 31) {
             dateNum = 1;
             pastTheMont = true;
         }
