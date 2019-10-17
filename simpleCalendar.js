@@ -1,18 +1,19 @@
 const LANGUAGE = "bg";
+var that = this;
 let container = document.getElementById("simpleCalendarContainer");
-let month = new Date().getMonth();
+that.monthGlobal = new Date().getMonth();
+that.numMont = 0;
 let year = new Date().getFullYear();
-let seasonTheme = getSeasonTheme(month + 1);
-let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE, month, year);
+let seasonTheme = getSeasonTheme(that.monthGlobal + 1);
+let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE, year);
 container.innerHTML += calendarTopRow;
 let table = document.getElementById("simpleCalendar");
 let todayDate = new Date().getDate();
-let firstDayOfMonth = new Date(year, month, 1).toString();
+let firstDayOfMonth = new Date(year, that.monthGlobal, 1).toString();
 let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
 let emptyCols = calcEmptyCols(dayName);
 let dateNum = genCalSecondRow(
     table,
-    month,
     year,
     todayDate,
     emptyCols,
@@ -20,9 +21,9 @@ let dateNum = genCalSecondRow(
 );
 
 //give a class name of the calendar theme according to the current season
-function getSeasonTheme(month) {
+function getSeasonTheme() {
     let theme = "january";
-    switch (month) {
+    switch (that.monthGlobal) {
         case 1:
             theme = "january";
             break;
@@ -63,33 +64,42 @@ function getSeasonTheme(month) {
             theme = "january";
             break;
     }
+    // month--;
     return theme;
 }
 
-function prevMonth(month, year) {
-    // alert(month + ' ' + year);
-    // let topRow = genCalTopRow(seasonTheme, LANGUAGE, month, year);
-    // let container = document.getElementById("simpleCalendarContainer");
-    // container.innerHTML = '';
-    // container.innerHTML += topRow;
-    // month--;
+function prevMonth(year) {
+    var that = this;
+    that.monthGlobal = that.monthGlobal - 1;
+    let seasonTheme = getSeasonTheme();
+    let topRow = genCalTopRow(seasonTheme, LANGUAGE, year);
+    let container = document.getElementById("simpleCalendarContainer");
+    container.innerHTML = '';
+    container.innerHTML += topRow;
+    let table = document.getElementById("simpleCalendar");
+    let dateNum = genCalSecondRow(table, '2019', that.monthGlobal);
+
+    genTableBody(dateNum, table, year, todayDate, emptyCols, seasonTheme);
+    // alert(dateNum);
 }
 
-function nextMonth(month, year) {
-    alert(month + 2 + ' ' + year);
+function nextMonth(year) {
+    // alert(month + ' ' + year);
+    that.monthGlobal = that.monthGlobal + 1;
+    alert(that.monthGlobal);
 }
 
 //functions about generating calendar
 //Following function generate first row of the table with the name of the days
-function genCalTopRow(seasonTheme, LANGUAGE, month, year) {
+function genCalTopRow(seasonTheme, LANGUAGE, year) {
 
-    let monthName = getCurrentMonthName(LANGUAGE, month, year);
+    let monthName = getCurrentMonthName(LANGUAGE, year);
 
 
     switch (LANGUAGE) {
         case "bg":
             return `<table class=${seasonTheme} id="simpleCalendar">
-              <tr><th colspan="7"><a onclick="prevMonth(month, year, seasonTheme, LANGUAGE);" style="color: orange" href="#">&lt;</a>${monthName}<a onclick="nextMonth(month, year);" style="color: orange" href="#">&gt;</a></th></tr>  
+              <tr><th colspan="7"><a onclick="prevMonth(year, LANGUAGE);" style="color: orange" href="#">&lt;</a>${monthName}<a onclick="nextMonth(year);" style="color: orange" href="#">&gt;</a></th></tr>  
               <tr>
                 <th id="Mon">Пон.</th>
                 <th id="Tue">Вто.</th>
@@ -120,8 +130,8 @@ function genCalTopRow(seasonTheme, LANGUAGE, month, year) {
     }
 }
 
-function getCurrentMonthName(LANGUAGE, month, year) {
-    let currentDate = new Date(year, month + 1, 0) + " ";
+function getCurrentMonthName(LANGUAGE, year) {
+    let currentDate = new Date(year, that.monthGlobal + 1, 0) + " ";
     let monthName = currentDate.split(" ")[1];
 
     if (LANGUAGE == "bg") {
@@ -210,7 +220,6 @@ function getCurrentMonthName(LANGUAGE, month, year) {
 //Generate second row of the table. Use variable emptyCols to draw empty cells in depends when is the first day of the month. For example if the first day of the month is monday, then the value of the empyCols is 0. If the first day is tusday, then monday is empty so the value of the emptyCols is 1. If the first day is wednesday, then before this day there are two empty days - monday and tuesday, so the valye of emptyCols is 2 and so on...
 function genCalSecondRow(
     table,
-    month,
     year,
     todayDate,
     emptyCols,
@@ -218,7 +227,7 @@ function genCalSecondRow(
 ) {
     const DAYS_COUNT = 7;
     let startDate = 1;
-    let previousMont = new Date(year, month, 0) + " ";
+    let previousMont = new Date(year, that.monthGlobal, 0) + " ";
     let previousMontDays = parseInt(previousMont.split(" ")[2]);
     let prevMontStart = previousMontDays + 1 - emptyCols;
     let secondRow = table.insertRow();
@@ -235,7 +244,7 @@ function genCalSecondRow(
                 let anotherTd = secondRow.insertCell();
                 anotherTd.innerHTML = `${startDate}`;
                 anotherTd.setAttribute('class', `${seasonTheme}Hightlight`)
-                another.onclick = e => showDate(e);
+                anotherTd.onclick = e => showDate(e);
                 // secondRow.innerHTML += `<td id="${startDate}" class="hightlight">${startDate}</td>`;
                 // secondRow.onclick = e => showDate(e);
             } else {
@@ -294,13 +303,12 @@ function calcEmptyCols(dayName) {
 function genTableBody(
     dateNum,
     table,
-    month,
     year,
     todayDate,
     emptyCols,
     seasonTheme
 ) {
-    let currentDate = new Date(year, month + 1, 0) + " ";
+    let currentDate = new Date(year, that.monthGlobal + 1, 0) + " ";
     let countDays = parseInt(currentDate.split(" ")[2]);
     let currentMonthDays = countDays;
     let lastDayOfMonthName = currentDate.split(" ")[0];
@@ -390,4 +398,4 @@ function showDate(e) {
     // alert(num);
 }
 
-genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme);
+genTableBody(dateNum, table, year, todayDate, emptyCols, seasonTheme);
