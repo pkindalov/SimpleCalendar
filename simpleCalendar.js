@@ -2,7 +2,7 @@ const LANGUAGE = "bg";
 var that = this;
 let container = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
-that.numMont = 0;
+// that.numMont = 0;
 let year = new Date().getFullYear();
 let seasonTheme = getSeasonTheme(that.monthGlobal + 1);
 let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE, year);
@@ -23,7 +23,10 @@ let dateNum = genCalSecondRow(
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme() {
     let theme = "january";
-    switch (that.monthGlobal) {
+    that.monthGlobal = that.monthGlobal > 0 ? that.monthGlobal : 12;
+    that.monthGlobal = that.monthGlobal > 12 ? 1 : that.monthGlobal;
+    // alert(that.monthGlobal);
+    switch (that.monthGlobal + 1) {
         case 1:
             theme = "january";
             break;
@@ -72,6 +75,7 @@ function prevMonth(year) {
     var that = this;
     that.monthGlobal = that.monthGlobal - 1;
     let seasonTheme = getSeasonTheme();
+    // alert(seasonTheme);
     let topRow = genCalTopRow(seasonTheme, LANGUAGE, year);
     let container = document.getElementById("simpleCalendarContainer");
     container.innerHTML = '';
@@ -84,9 +88,20 @@ function prevMonth(year) {
 }
 
 function nextMonth(year) {
-    // alert(month + ' ' + year);
+    var that = this;
     that.monthGlobal = that.monthGlobal + 1;
-    alert(that.monthGlobal);
+    let seasonTheme = getSeasonTheme();
+    let topRow = genCalTopRow(seasonTheme, LANGUAGE, year);
+    let container = document.getElementById("simpleCalendarContainer");
+    container.innerHTML = '';
+    container.innerHTML += topRow;
+    let table = document.getElementById("simpleCalendar");
+    let dateNum = genCalSecondRow(table, '2019', that.monthGlobal);
+
+    genTableBody(dateNum, table, year, todayDate, emptyCols, seasonTheme);
+    // alert(month + ' ' + year);
+    // that.monthGlobal = that.monthGlobal + 1;
+    // alert(that.monthGlobal);
 }
 
 //functions about generating calendar
@@ -99,7 +114,8 @@ function genCalTopRow(seasonTheme, LANGUAGE, year) {
     switch (LANGUAGE) {
         case "bg":
             return `<table class=${seasonTheme} id="simpleCalendar">
-              <tr><th colspan="7"><a onclick="prevMonth(year, LANGUAGE);" style="color: orange" href="#">&lt;</a>${monthName}<a onclick="nextMonth(year);" style="color: orange" href="#">&gt;</a></th></tr>  
+              <tr><th colspan="7"><button onclick="prevMonth(year, LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(year);" style="color: orange">&gt;</button></th></tr>  
+              <tr><th colspan="7"><button onclick="chooseYear(e)">${year}</button></tr>
               <tr>
                 <th id="Mon">Пон.</th>
                 <th id="Tue">Вто.</th>
