@@ -3,18 +3,17 @@ var that = this;
 let container = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
 // that.numMont = 0;
-let year = new Date().getFullYear();
+that.year = new Date().getFullYear();
 let seasonTheme = getSeasonTheme(that.monthGlobal + 1);
-let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE, year);
+let calendarTopRow = genCalTopRow(seasonTheme, LANGUAGE);
 container.innerHTML += calendarTopRow;
 let table = document.getElementById("simpleCalendar");
 let todayDate = new Date().getDate();
-let firstDayOfMonth = new Date(year, that.monthGlobal, 1).toString();
+let firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
 let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
 let emptyCols = calcEmptyCols(dayName);
 let dateNum = genCalSecondRow(
     table,
-    year,
     todayDate,
     emptyCols,
     seasonTheme
@@ -23,8 +22,8 @@ let dateNum = genCalSecondRow(
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme() {
     let theme = "january";
-    that.monthGlobal = that.monthGlobal > 0 ? that.monthGlobal : 12;
-    that.monthGlobal = that.monthGlobal > 12 ? 1 : that.monthGlobal;
+    that.monthGlobal = that.monthGlobal >= 0 ? that.monthGlobal : 1;
+    that.monthGlobal = that.monthGlobal > 12 ? 0 : that.monthGlobal;
     // alert(that.monthGlobal);
     switch (that.monthGlobal + 1) {
         case 1:
@@ -71,34 +70,38 @@ function getSeasonTheme() {
     return theme;
 }
 
-function prevMonth(year) {
+function prevMonth() {
     var that = this;
-    that.monthGlobal = that.monthGlobal - 1;
+    that.monthGlobal--;
     let seasonTheme = getSeasonTheme();
     // alert(seasonTheme);
-    let topRow = genCalTopRow(seasonTheme, LANGUAGE, year);
+    let topRow = genCalTopRow(seasonTheme, LANGUAGE);
     let container = document.getElementById("simpleCalendarContainer");
     container.innerHTML = '';
     container.innerHTML += topRow;
     let table = document.getElementById("simpleCalendar");
-    let dateNum = genCalSecondRow(table, '2019', that.monthGlobal);
+    let dateNum = genCalSecondRow(table, that.monthGlobal);
+    console.log(that.monthGlobal);
+    if (that.monthGlobal < 1) {
+        that.year = parseInt(new Date().getFullYear()) - 1;
+    }
 
-    genTableBody(dateNum, table, year, todayDate, emptyCols, seasonTheme);
+    genTableBody(dateNum, table, todayDate, emptyCols, seasonTheme);
     // alert(dateNum);
 }
 
-function nextMonth(year) {
+function nextMonth() {
     var that = this;
     that.monthGlobal = that.monthGlobal + 1;
     let seasonTheme = getSeasonTheme();
-    let topRow = genCalTopRow(seasonTheme, LANGUAGE, year);
+    let topRow = genCalTopRow(seasonTheme, LANGUAGE);
     let container = document.getElementById("simpleCalendarContainer");
     container.innerHTML = '';
     container.innerHTML += topRow;
     let table = document.getElementById("simpleCalendar");
-    let dateNum = genCalSecondRow(table, '2019', that.monthGlobal);
+    let dateNum = genCalSecondRow(table, that.monthGlobal);
 
-    genTableBody(dateNum, table, year, todayDate, emptyCols, seasonTheme);
+    genTableBody(dateNum, table, todayDate, emptyCols, seasonTheme);
     // alert(month + ' ' + year);
     // that.monthGlobal = that.monthGlobal + 1;
     // alert(that.monthGlobal);
@@ -106,16 +109,16 @@ function nextMonth(year) {
 
 //functions about generating calendar
 //Following function generate first row of the table with the name of the days
-function genCalTopRow(seasonTheme, LANGUAGE, year) {
+function genCalTopRow(seasonTheme, LANGUAGE) {
 
-    let monthName = getCurrentMonthName(LANGUAGE, year);
+    let monthName = getCurrentMonthName(LANGUAGE);
 
 
     switch (LANGUAGE) {
         case "bg":
             return `<table class=${seasonTheme} id="simpleCalendar">
-              <tr><th colspan="7"><button onclick="prevMonth(year, LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(year);" style="color: orange">&gt;</button></th></tr>  
-              <tr><th colspan="7"><button onclick="chooseYear(e)">${year}</button></tr>
+              <tr><th colspan="7"><button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th></tr>  
+              <tr><th colspan="7"><button id="yearButton" onclick="chooseYear(e)">${that.year}</button></tr>
               <tr>
                 <th id="Mon">Пон.</th>
                 <th id="Tue">Вто.</th>
@@ -146,8 +149,8 @@ function genCalTopRow(seasonTheme, LANGUAGE, year) {
     }
 }
 
-function getCurrentMonthName(LANGUAGE, year) {
-    let currentDate = new Date(year, that.monthGlobal + 1, 0) + " ";
+function getCurrentMonthName(LANGUAGE) {
+    let currentDate = new Date(that.year, that.monthGlobal + 1, 0) + " ";
     let monthName = currentDate.split(" ")[1];
 
     if (LANGUAGE == "bg") {
@@ -236,14 +239,13 @@ function getCurrentMonthName(LANGUAGE, year) {
 //Generate second row of the table. Use variable emptyCols to draw empty cells in depends when is the first day of the month. For example if the first day of the month is monday, then the value of the empyCols is 0. If the first day is tusday, then monday is empty so the value of the emptyCols is 1. If the first day is wednesday, then before this day there are two empty days - monday and tuesday, so the valye of emptyCols is 2 and so on...
 function genCalSecondRow(
     table,
-    year,
     todayDate,
     emptyCols,
     seasonTheme
 ) {
     const DAYS_COUNT = 7;
     let startDate = 1;
-    let previousMont = new Date(year, that.monthGlobal, 0) + " ";
+    let previousMont = new Date(that.year, that.monthGlobal, 0) + " ";
     let previousMontDays = parseInt(previousMont.split(" ")[2]);
     let prevMontStart = previousMontDays + 1 - emptyCols;
     let secondRow = table.insertRow();
@@ -319,12 +321,11 @@ function calcEmptyCols(dayName) {
 function genTableBody(
     dateNum,
     table,
-    year,
     todayDate,
     emptyCols,
     seasonTheme
 ) {
-    let currentDate = new Date(year, that.monthGlobal + 1, 0) + " ";
+    let currentDate = new Date(that.year, that.monthGlobal + 1, 0) + " ";
     let countDays = parseInt(currentDate.split(" ")[2]);
     let currentMonthDays = countDays;
     let lastDayOfMonthName = currentDate.split(" ")[0];
@@ -414,4 +415,4 @@ function showDate(e) {
     // alert(num);
 }
 
-genTableBody(dateNum, table, year, todayDate, emptyCols, seasonTheme);
+genTableBody(dateNum, table, todayDate, emptyCols, seasonTheme);
