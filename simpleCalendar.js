@@ -357,7 +357,19 @@ function genTableBody(dateNum, table, todayDate, seasonTheme) {
     } else if (lastDayOfMonthName == "Thu" && countDays == 31) {
         countDays += 4;
     } else if (lastDayOfMonthName == "Thu" && countDays == 30) {
-        countDays += 3;
+        countDays += 5;
+    } else if (lastDayOfMonthName == "Fri" && countDays == 31) {
+        countDays += 4;
+    } else if (lastDayOfMonthName == "Fri" && countDays == 30) {
+        countDays += 5;
+    } else if (lastDayOfMonthName == "Sat" && countDays == 31) {
+        countDays += 4;
+    } else if (lastDayOfMonthName == "Sat" && countDays == 30) {
+        countDays += 5;
+    } else if (lastDayOfMonthName == "Sun" && countDays == 31) {
+        countDays += 11;
+    } else if (lastDayOfMonthName == "Sun" && countDays == 30) {
+        countDays += 12;
     }
 
     // alert(countDays);
