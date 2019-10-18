@@ -167,6 +167,12 @@ function genCalTopRow(seasonTheme, LANGUAGE) {
     }
 }
 
+// function getMonthShortName() {
+//     switch (that.monthGlobal) {
+
+//     }
+// }
+
 function getCurrentMonthName(LANGUAGE) {
     let currentDate = new Date(that.year, that.monthGlobal + 1, 0) + " ";
     let monthName = currentDate.split(" ")[1];
@@ -372,6 +378,35 @@ function genTableBody(dateNum, table, todayDate, seasonTheme) {
         countDays += 12;
     }
 
+    if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 29) {
+        countDays += 13;
+    }
     // alert(countDays);
     // switch (lastDayOfMonthName) {
     //     case 'Mon':
