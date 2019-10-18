@@ -8,11 +8,11 @@ that.seasonTheme = getSeasonTheme(that.monthGlobal + 1);
 let calendarTopRow = genCalTopRow(LANGUAGE);
 container.innerHTML += calendarTopRow;
 let table = document.getElementById("simpleCalendar");
-let todayDate = new Date().getDate();
+that.todayDate = new Date().getDate();
 let firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
 let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
-let dateNum = genCalSecondRow(table, todayDate);
+let dateNum = genCalSecondRow(table);
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme() {
@@ -86,7 +86,7 @@ function prevMonth() {
     // console.log(that.monthGlobal);
 
     // console.log("Prev: " + that.monthGlobal);
-    genTableBody(dateNum, table, todayDate);
+    genTableBody(dateNum, table);
     // alert(dateNum);
 }
 
@@ -110,7 +110,7 @@ function nextMonth() {
     let dateNum = genCalSecondRow(table, that.monthGlobal);
 
     // console.log("Next: " + that.monthGlobal);
-    genTableBody(dateNum, table, todayDate);
+    genTableBody(dateNum, table);
 
     // var that = this;
     // that.monthGlobal = that.monthGlobal + 1;
@@ -260,13 +260,14 @@ function getCurrentMonthName(LANGUAGE) {
 }
 
 //Generate second row of the table. Use variable emptyCols to draw empty cells in depends when is the first day of the month. For example if the first day of the month is monday, then the value of the empyCols is 0. If the first day is tusday, then monday is empty so the value of the emptyCols is 1. If the first day is wednesday, then before this day there are two empty days - monday and tuesday, so the valye of emptyCols is 2 and so on...
-function genCalSecondRow(table, todayDate) {
+function genCalSecondRow(table) {
     const DAYS_COUNT = 7;
     let startDate = 1;
     let previousMont = new Date(that.year, that.monthGlobal, 0) + " ";
     let previousMontDays = parseInt(previousMont.split(" ")[2]);
     let prevMontStart = previousMontDays + 1 - that.emptyCols;
     let secondRow = table.insertRow();
+
 
     for (let i = 0; i < DAYS_COUNT; i++) {
         if (i < that.emptyCols) {
@@ -276,7 +277,7 @@ function genCalSecondRow(table, todayDate) {
             // secondRow.innerHTML += `<td class="${seasonTheme}Disabled">${prevMontStart}</td>`;
             prevMontStart++;
         } else {
-            if (todayDate == startDate) {
+            if (that.todayDate == startDate) {
                 let anotherTd = secondRow.insertCell();
                 anotherTd.innerHTML = `${startDate}`;
                 anotherTd.setAttribute("class", `${that.seasonTheme}Hightlight`);
@@ -336,7 +337,7 @@ function calcEmptyCols(dayName) {
     return emptyCols;
 }
 
-function genTableBody(dateNum, table, todayDate) {
+function genTableBody(dateNum, table) {
     let currentDate = new Date(that.year, that.monthGlobal + 1, 0) + " ";
     let countDays = parseInt(currentDate.split(" ")[2]);
     let currentMonthDays = countDays;
@@ -444,7 +445,7 @@ function genTableBody(dateNum, table, todayDate) {
         // } else {
         // }
 
-        if (dateNum == todayDate) {
+        if (dateNum == that.todayDate) {
             let todayCell = tr.insertCell();
             todayCell.innerHTML = `${dateNum}`;
             todayCell.setAttribute(`class`, `${that.seasonTheme}Hightlight`);
@@ -471,4 +472,4 @@ function showDate(e) {
     // alert(num);
 }
 
-genTableBody(dateNum, table, todayDate);
+genTableBody(dateNum, table);
