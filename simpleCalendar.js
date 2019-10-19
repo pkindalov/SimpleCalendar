@@ -1,12 +1,12 @@
 const LANGUAGE = "bg";
 var that = this;
-let container = document.getElementById("simpleCalendarContainer");
+that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
 // that.numMont = 0;
 that.year = new Date().getFullYear();
 that.seasonTheme = getSeasonTheme(that.monthGlobal + 1);
 let calendarTopRow = genCalTopRow(LANGUAGE);
-container.innerHTML += calendarTopRow;
+simpleCalendarContainer.innerHTML += calendarTopRow;
 let table = document.getElementById("simpleCalendar");
 that.todayDate = new Date().getDate();
 let firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
@@ -77,9 +77,8 @@ function prevMonth() {
     let firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
     that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
-    let container = document.getElementById("simpleCalendarContainer");
-    container.innerHTML = "";
-    container.innerHTML += topRow;
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
     let table = document.getElementById("simpleCalendar");
     let dateNum = genCalSecondRow(table, that.monthGlobal);
     // console.log(that.monthGlobal);
@@ -102,9 +101,8 @@ function nextMonth() {
     let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
     that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
-    let container = document.getElementById("simpleCalendarContainer");
-    container.innerHTML = "";
-    container.innerHTML += topRow;
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
     let table = document.getElementById("simpleCalendar");
     let dateNum = genCalSecondRow(table, that.monthGlobal);
 
@@ -115,9 +113,9 @@ function nextMonth() {
     // that.monthGlobal = that.monthGlobal + 1;
     // let seasonTheme = getSeasonTheme();
     // let topRow = genCalTopRow(seasonTheme, LANGUAGE);
-    // let container = document.getElementById("simpleCalendarContainer");
-    // container.innerHTML = "";
-    // container.innerHTML += topRow;
+    // let simpleCalendarContainer = document.getElementById("simpleCalendarsimpleCalendarContainer");
+    // simpleCalendarContainer.innerHTML = "";
+    // simpleCalendarContainer.innerHTML += topRow;
     // let table = document.getElementById("simpleCalendar");
     // let dateNum = genCalSecondRow(table, that.monthGlobal);
 
@@ -137,9 +135,8 @@ function nextYear() {
     let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
     that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
-    let container = document.getElementById("simpleCalendarContainer");
-    container.innerHTML = "";
-    container.innerHTML += topRow;
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
     let table = document.getElementById("simpleCalendar");
     let dateNum = genCalSecondRow(table, that.monthGlobal);
 
@@ -161,9 +158,8 @@ function prevYear() {
     let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
     that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
-    let container = document.getElementById("simpleCalendarContainer");
-    container.innerHTML = "";
-    container.innerHTML += topRow;
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
     let table = document.getElementById("simpleCalendar");
     let dateNum = genCalSecondRow(table, that.monthGlobal);
 
