@@ -2,16 +2,17 @@ const LANGUAGE = "bg";
 var that = this;
 that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
-// that.numMont = 0;
 that.year = new Date().getFullYear();
 that.seasonTheme = getSeasonTheme(that.monthGlobal + 1);
 let calendarTopRow = genCalTopRow(LANGUAGE);
 simpleCalendarContainer.innerHTML += calendarTopRow;
 that.simpleCalendarTable = document.getElementById("simpleCalendar");
 that.todayDate = new Date().getDate();
-let firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
+that.listOfYearsContainer = document.getElementById('listOfYears');
+that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+let dayName = getDayName(that.firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
+that.prevNextButtonsYear = that.year;
 let dateNum = genCalSecondRow();
 
 //give a class name of the calendar theme according to the current season
@@ -74,8 +75,8 @@ function prevMonth() {
         that.year--;
     }
 
-    let firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
@@ -96,8 +97,8 @@ function nextMonth() {
         // that.year = parseInt(new Date().getFullYear()) - 1;
         that.year++;
     }
-    let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
-    that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
@@ -129,8 +130,8 @@ function nextYear() {
         // that.year = parseInt(new Date().getFullYear()) - 1;
         that.year++;
     }
-    let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
-    that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
@@ -143,7 +144,32 @@ function nextYear() {
 }
 
 function prevYear() {
-    that.year--;
+    that.prevNextButtonsYear = parseInt(document.getElementById("listOfYears").value);
+    that.prevNextButtonsYear--;
+
+    // document.getElementById("listOfYears").value = that.prevNextButtonsYear;
+
+    // for (let i = 0; i < yearsOptions.children.length; i++) {
+    //     console.log(yearsOptions.children[i].value);
+    //     if (parseInt(yearsOptions.children[i].value) == that.prevNextButtonsYear) {
+    //         yearsOptions.children[i].setAttribute("selected", "selected");
+    //         console.log(yearsOptions.children[i]);
+    //     }
+    // }
+    //     for (let i = 0; i < yearsOptions.length; i++) {
+    //         if (parseInt(yearsOptions[i].value) == that.prevNextButtonsYear) {
+    //             yearsOptions[yearsOptions[i].selectedIndex].selected = true;
+
+    // // country.options[country.options.selectedIndex].selected = true;
+    //             yearsOptions.value = that.prevNextButtonsYear;
+
+    //             break;
+    //         }
+    //         // console.log(typeof yearsOptions[i].value);
+    //     }
+
+    // console.log(that.prevNextButtonsYear);
+    // alert(typeof startYear);
 
     that.seasonTheme = getSeasonTheme();
     if (that.monthGlobal > 11) {
@@ -151,8 +177,8 @@ function prevYear() {
         // that.year = parseInt(new Date().getFullYear()) - 1;
         that.year++;
     }
-    let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
-    that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
+    that.firstDayOfMonth = new Date(that.prevNextButtonsYear, that.monthGlobal).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
@@ -160,6 +186,39 @@ function prevYear() {
 
     // console.log("Next: " + that.monthGlobal);
     genTableBody(dateNum);
+    let yearsOptions = document.getElementById("listOfYears");
+    yearsOptions.children[0].value = that.prevNextButtonsYear;
+    yearsOptions.children[0].innerText = that.prevNextButtonsYear;
+    genYearsOptions(that.prevNextButtonsYear);
+}
+
+function genYearsOptions(years) {
+    let listOfYears = years;
+    let option = '';
+    for (let i = 0; i < 50; i++) {
+        listOfYears--;
+        option = document.createElement('option');
+        option.text = listOfYears;
+        option.value = listOfYears;
+        that.listOfYearsContainer = document.getElementById('listOfYears');
+        that.listOfYearsContainer.appendChild(option);
+    }
+
+}
+
+function chooseYear() {
+    // let select = document.createElement('select');
+    // select.setAttribute('id', "listOfYears");
+
+    genYearsOptions(that.year);
+
+    let selOption = document.getElementById("listOfYears").value;
+    document.getElementById("listOfYears").onchange = function(e) {
+        selOption = this.value;
+        //TO DRAW UPDATED MONTH HERE
+    }
+
+    // that.simpleCalendarContainer.appendChild(select);
 }
 
 //functions about generating calendar
@@ -178,7 +237,9 @@ function genCalTopRow(LANGUAGE) {
               <tr>
                 <th colspan="7">
                     <button id="prevYear"   onclick="prevYear()">&lt;</button>
-                    <button id="yearButton" onclick="chooseYear()">${that.year}</button>
+                    <select id="listOfYears" onclick="chooseYear()">
+                    <option value="${that.year}">${that.year}</option>
+                    </select>
                     <button id="nextYear"   onclick="nextYear()">&gt;</button>
                 </th>
               </tr>
