@@ -61,7 +61,6 @@ function getSeasonTheme() {
             theme = "january";
             break;
     }
-    // month--;
     return theme;
 }
 
@@ -126,6 +125,52 @@ function nextMonth() {
 
 }
 
+function nextYear() {
+    that.year++;
+
+    that.seasonTheme = getSeasonTheme();
+    if (that.monthGlobal > 11) {
+        that.monthGlobal = 0;
+        // that.year = parseInt(new Date().getFullYear()) - 1;
+        that.year++;
+    }
+    let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
+    that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    let container = document.getElementById("simpleCalendarContainer");
+    container.innerHTML = "";
+    container.innerHTML += topRow;
+    let table = document.getElementById("simpleCalendar");
+    let dateNum = genCalSecondRow(table, that.monthGlobal);
+
+    // console.log("Next: " + that.monthGlobal);
+    genTableBody(dateNum, table);
+
+
+}
+
+function prevYear() {
+    that.year--;
+
+    that.seasonTheme = getSeasonTheme();
+    if (that.monthGlobal > 11) {
+        that.monthGlobal = 0;
+        // that.year = parseInt(new Date().getFullYear()) - 1;
+        that.year++;
+    }
+    let firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
+    that.emptyCols = calcEmptyCols(firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    let container = document.getElementById("simpleCalendarContainer");
+    container.innerHTML = "";
+    container.innerHTML += topRow;
+    let table = document.getElementById("simpleCalendar");
+    let dateNum = genCalSecondRow(table, that.monthGlobal);
+
+    // console.log("Next: " + that.monthGlobal);
+    genTableBody(dateNum, table);
+}
+
 //functions about generating calendar
 //Following function generate first row of the table with the name of the days
 function genCalTopRow(LANGUAGE) {
@@ -134,8 +179,18 @@ function genCalTopRow(LANGUAGE) {
     switch (LANGUAGE) {
         case "bg":
             return `<table class=${that.seasonTheme} id="simpleCalendar">
-              <tr><th colspan="7"><button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th></tr>  
-              <tr><th colspan="7"><button id="yearButton" onclick="chooseYear(e)">${that.year}</button></tr>
+              <tr>
+                <th colspan="7">
+                    <button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button>
+                </th>
+                </tr>  
+              <tr>
+                <th colspan="7">
+                    <button id="prevYear"   onclick="prevYear()">&lt;</button>
+                    <button id="yearButton" onclick="chooseYear()">${that.year}</button>
+                    <button id="nextYear"   onclick="nextYear()">&gt;</button>
+                </th>
+              </tr>
               <tr>
                 <th id="Mon">Пон.</th>
                 <th id="Tue">Вто.</th>
@@ -150,7 +205,8 @@ function genCalTopRow(LANGUAGE) {
             break;
         case "en":
             return `<table class=${that.seasonTheme} id="simpleCalendar">
-                 <tr><th colspan="7">${monthName}</th></tr>  
+                 <tr><th colspan="7"><button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th></tr>  
+              <tr><th colspan="7"><button id="yearButton" onclick="chooseYear(e)">${that.year}</button></tr> 
                   <tr>
                     <th id="Mon">Mon.</th>
                     <th id="Tue">Tue.</th>
