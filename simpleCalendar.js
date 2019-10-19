@@ -122,7 +122,9 @@ function nextMonth() {
 }
 
 function nextYear() {
-    that.year++;
+    // that.year++;
+    that.prevNextButtonsYear = parseInt(document.getElementById("listOfYears").value);
+    that.prevNextButtonsYear++;
 
     that.seasonTheme = getSeasonTheme();
     if (that.monthGlobal > 11) {
@@ -130,7 +132,7 @@ function nextYear() {
         // that.year = parseInt(new Date().getFullYear()) - 1;
         that.year++;
     }
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
+    that.firstDayOfMonth = new Date(that.prevNextButtonsYear, that.monthGlobal).toString();
     that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
@@ -139,6 +141,10 @@ function nextYear() {
 
     // console.log("Next: " + that.monthGlobal);
     genTableBody(dateNum);
+    let yearsOptions = document.getElementById("listOfYears");
+    yearsOptions.children[0].value = that.prevNextButtonsYear;
+    yearsOptions.children[0].innerText = that.prevNextButtonsYear;
+    genYearsOptions(that.prevNextButtonsYear);
 
 
 }
@@ -212,10 +218,26 @@ function chooseYear() {
 
     genYearsOptions(that.year);
 
-    let selOption = document.getElementById("listOfYears").value;
+    let selYear = document.getElementById("listOfYears").value;
     document.getElementById("listOfYears").onchange = function(e) {
-        selOption = this.value;
+        selYear = parseInt(this.value);
+
         //TO DRAW UPDATED MONTH HERE
+        // that.seasonTheme = getSeasonTheme();
+
+        that.firstDayOfMonth = new Date(selYear, that.monthGlobal).toString();
+        that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+        let topRow = genCalTopRow(LANGUAGE);
+        that.simpleCalendarContainer.innerHTML = "";
+        that.simpleCalendarContainer.innerHTML += topRow;
+        let dateNum = genCalSecondRow(that.monthGlobal);
+
+        // console.log("Next: " + that.monthGlobal);
+        genTableBody(dateNum);
+
+        let yearsOptions = document.getElementById("listOfYears");
+        yearsOptions.children[0].value = selYear;
+        yearsOptions.children[0].innerText = selYear;
     }
 
     // that.simpleCalendarContainer.appendChild(select);
