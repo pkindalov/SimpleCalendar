@@ -1,8 +1,9 @@
-const LANGUAGE = "en";
+const LANGUAGE = "bg";
 var that = this;
 that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
 that.year = new Date().getFullYear();
+that.prevNextButtonsYear = that.year;
 that.seasonTheme = getSeasonTheme(that.monthGlobal + 1);
 let calendarTopRow = genCalTopRow(LANGUAGE);
 simpleCalendarContainer.innerHTML += calendarTopRow;
@@ -12,7 +13,6 @@ that.listOfYearsContainer = document.getElementById('listOfYears');
 that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
 let dayName = getDayName(that.firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
-that.prevNextButtonsYear = that.year;
 let dateNum = genCalSecondRow();
 
 //give a class name of the calendar theme according to the current season
@@ -73,9 +73,10 @@ function prevMonth() {
         that.monthGlobal = 11;
         // that.year = parseInt(new Date().getFullYear()) - 1;
         that.year--;
+        that.prevNextButtonsYear--;
     }
 
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.firstDayOfMonth = new Date(that.prevNextButtonsYear, that.monthGlobal, 1).toString();
     that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
@@ -84,6 +85,11 @@ function prevMonth() {
 
     // console.log("Prev: " + that.monthGlobal);
     genTableBody(dateNum);
+    let yearsOptions = document.getElementById("listOfYears");
+    yearsOptions.children[0].value = that.prevNextButtonsYear;
+    yearsOptions.children[0].innerText = that.prevNextButtonsYear;
+    genYearsOptions(that.prevNextButtonsYear);
+    // console.log(that.prevNextButtonsYear);
     // alert(dateNum);
 }
 
@@ -97,7 +103,7 @@ function nextMonth() {
         // that.year = parseInt(new Date().getFullYear()) - 1;
         that.year++;
     }
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
+    that.firstDayOfMonth = new Date(that.prevNextButtonsYear, that.monthGlobal).toString();
     that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
@@ -106,6 +112,10 @@ function nextMonth() {
 
     // console.log("Next: " + that.monthGlobal);
     genTableBody(dateNum);
+    let yearsOptions = document.getElementById("listOfYears");
+    yearsOptions.children[0].value = that.prevNextButtonsYear;
+    yearsOptions.children[0].innerText = that.prevNextButtonsYear;
+    genYearsOptions(that.prevNextButtonsYear);
 
     // var that = this;
     // that.monthGlobal = that.monthGlobal + 1;
@@ -238,8 +248,10 @@ function chooseYear() {
         let yearsOptions = document.getElementById("listOfYears");
         yearsOptions.children[0].value = selYear;
         yearsOptions.children[0].innerText = selYear;
+        that.prevNextButtonsYear = selYear;
     }
 
+    // console.log(that.prevNextButtonsYear);
     // that.simpleCalendarContainer.appendChild(select);
 }
 
@@ -260,7 +272,7 @@ function genCalTopRow(LANGUAGE) {
                 <th colspan="7">
                     <button id="prevYear"   onclick="prevYear()">&lt;</button>
                     <select id="listOfYears" onclick="chooseYear()">
-                    <option value="${that.year}">${that.year}</option>
+                    <option value="${that.prevNextButtonsYear}">${that.prevNextButtonsYear}</option>
                     </select>
                     <button id="nextYear"   onclick="nextYear()">&gt;</button>
                 </th>
@@ -287,7 +299,7 @@ function genCalTopRow(LANGUAGE) {
                             <th colspan="7">
                                 <button id="prevYear"   onclick="prevYear()">&lt;</button>
                                 <select id="listOfYears" onclick="chooseYear()">
-                                <option value="${that.year}">${that.year}</option>
+                                <option value="${that.prevNextButtonsYear}">${that.prevNextButtonsYear}</option>
                                 </select>
                                 <button id="nextYear"   onclick="nextYear()">&gt;</button>
                             </th> 
@@ -404,7 +416,7 @@ function getCurrentMonthName(LANGUAGE) {
 function genCalSecondRow() {
     const DAYS_COUNT = 7;
     let startDate = 1;
-    let previousMont = new Date(that.year, that.monthGlobal, 0) + " ";
+    let previousMont = new Date(that.prevNextButtonsYear, that.monthGlobal, 0) + " ";
     let previousMontDays = parseInt(previousMont.split(" ")[2]);
     let prevMontStart = previousMontDays + 1 - that.emptyCols;
     that.simpleCalendarTable = document.getElementById("simpleCalendar");
