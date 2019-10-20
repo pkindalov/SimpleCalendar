@@ -1,4 +1,4 @@
-const LANGUAGE = "bg";
+const LANGUAGE = "en";
 var that = this;
 that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
@@ -279,18 +279,29 @@ function genCalTopRow(LANGUAGE) {
             break;
         case "en":
             return `<table class=${that.seasonTheme} id="simpleCalendar">
-                 <tr><th colspan="7"><button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th></tr>  
-              <tr><th colspan="7"><button id="yearButton" onclick="chooseYear(e)">${that.year}</button></tr> 
-                  <tr>
-                    <th id="Mon">Mon.</th>
-                    <th id="Tue">Tue.</th>
-                    <th id="Wed">Wed.</th>
-                    <th id="Thu">Thu.</th>
-                    <th id="Fri">Fri.</th>
-                    <th id="Sat">Sat.</th>
-                    <th id="Sun">Sun.</th>
-                  </tr>
-                </table>  
+                        <tr>
+                            <th colspan="7">
+                            <button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th>
+                        </tr>  
+                        <tr>
+                            <th colspan="7">
+                                <button id="prevYear"   onclick="prevYear()">&lt;</button>
+                                <select id="listOfYears" onclick="chooseYear()">
+                                <option value="${that.year}">${that.year}</option>
+                                </select>
+                                <button id="nextYear"   onclick="nextYear()">&gt;</button>
+                            </th> 
+                        </tr> 
+                        <tr>
+                            <th id="Mon">Mon.</th>
+                            <th id="Tue">Tue.</th>
+                            <th id="Wed">Wed.</th>
+                            <th id="Thu">Thu.</th>
+                            <th id="Fri">Fri.</th>
+                            <th id="Sat">Sat.</th>
+                            <th id="Sun">Sun.</th>
+                        </tr>
+                     </table>  
                 `;
             break;
     }
