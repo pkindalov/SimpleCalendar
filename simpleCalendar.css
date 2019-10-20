@@ -15,7 +15,7 @@ td {
     border-radius: 5px;
 }
 
-td:hover{
+td:hover {
     background-color: #381e1d;
     cursor: pointer;
 }
@@ -203,4 +203,20 @@ td:hover{
     background: linear-gradient(to bottom, #197278 0%, #283d3b 150%);
     font-weight: bold;
     font-size: 160%;
+}
+
+button {
+    border-radius: 5px;
+    width: 15%;
+    height: 30px;
+    /* margin-left: calc(100% - 5em) / 2; */
+    /* margin-right: 15%; */
+}
+
+select,
+.monthName {
+    display: inline-block;
+    border-radius: 5px;
+    height: 30px;
+    width: 67%;
 }

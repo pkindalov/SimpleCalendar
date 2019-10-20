@@ -265,16 +265,17 @@ function genCalTopRow(LANGUAGE) {
             return `<table class=${that.seasonTheme} id="simpleCalendar">
               <tr>
                 <th colspan="7">
-                    <button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button>
+                    <button class="${that.seasonTheme}" onclick="prevMonth(LANGUAGE);">&lt;</button><div class="monthName">${monthName}</div>
+                    <button class="${that.seasonTheme}" onclick="nextMonth(LANGUAGE);">&gt;</button>
                 </th>
                 </tr>  
               <tr>
                 <th colspan="7">
-                    <button id="prevYear"   onclick="prevYear()">&lt;</button>
+                    <button class=${that.seasonTheme} id="prevYear"   onclick="prevYear()">&lt;</button>
                     <select id="listOfYears" onclick="chooseYear()">
                     <option value="${that.prevNextButtonsYear}">${that.prevNextButtonsYear}</option>
                     </select>
-                    <button id="nextYear"   onclick="nextYear()">&gt;</button>
+                    <button class=${that.seasonTheme} id="nextYear"   onclick="nextYear()">&gt;</button>
                 </th>
               </tr>
               <tr>
@@ -293,15 +294,16 @@ function genCalTopRow(LANGUAGE) {
             return `<table class=${that.seasonTheme} id="simpleCalendar">
                         <tr>
                             <th colspan="7">
-                            <button onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button>${monthName}<button onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th>
+                            <button class="${that.seasonTheme}" onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button><div class="monthName">${monthName}</div>
+                            <button class="${that.seasonTheme}" onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th>
                         </tr>  
                         <tr>
                             <th colspan="7">
-                                <button id="prevYear"   onclick="prevYear()">&lt;</button>
+                                <button class="${that.seasonTheme}" id="prevYear"  onclick="prevYear()">&lt;</button>
                                 <select id="listOfYears" onclick="chooseYear()">
                                 <option value="${that.prevNextButtonsYear}">${that.prevNextButtonsYear}</option>
                                 </select>
-                                <button id="nextYear"   onclick="nextYear()">&gt;</button>
+                                <button class="${that.seasonTheme}" id="nextYear"   onclick="nextYear()">&gt;</button>
                             </th> 
                         </tr> 
                         <tr>
