@@ -1,6 +1,7 @@
 const LANGUAGE = "bg";
 var that = this;
 that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
+that.simpleCalendarContainer.onkeypress = moveBack(event);
 that.monthGlobal = new Date().getMonth();
 that.year = new Date().getFullYear();
 that.prevNextButtonsYear = that.year;
@@ -229,7 +230,7 @@ function chooseYear() {
     genYearsOptions(that.year);
 
     let selYear = document.getElementById("listOfYears").value;
-    document.getElementById("listOfYears").onchange = function(e) {
+    document.getElementById("listOfYears").onchange = function (e) {
         selYear = parseInt(this.value);
 
         //TO DRAW UPDATED MONTH HERE
@@ -253,6 +254,10 @@ function chooseYear() {
 
     // console.log(that.prevNextButtonsYear);
     // that.simpleCalendarContainer.appendChild(select);
+}
+
+function moveBack(event) {
+    console.log(event);
 }
 
 //functions about generating calendar
@@ -506,66 +511,67 @@ function genTableBody(dateNum) {
     let pastTheMont = false;
 
     //Show 2 weeks after the last day of the current month.     
-    if (lastDayOfMonthName == "Mon" && countDays == 31) {
-        countDays += 11;
-    } else if (lastDayOfMonthName == "Mon" && countDays == 30) {
-        countDays += 12;
-    } else if (lastDayOfMonthName == "Tue" && countDays == 31) {
-        countDays += 11;
-    } else if (lastDayOfMonthName == "Tue" && countDays == 30) {
-        countDays += 5;
-    } else if (lastDayOfMonthName == "Wed" && countDays == 31) {
-        countDays += 4;
-    } else if (lastDayOfMonthName == "Wed" && countDays == 30) {
-        countDays += 5;
-    } else if (lastDayOfMonthName == "Thu" && countDays == 31) {
-        countDays += 4;
-    } else if (lastDayOfMonthName == "Thu" && countDays == 30) {
-        countDays += 5;
-    } else if (lastDayOfMonthName == "Fri" && countDays == 31) {
-        countDays += 4;
-    } else if (lastDayOfMonthName == "Fri" && countDays == 30) {
-        countDays += 5;
-    } else if (lastDayOfMonthName == "Sat" && countDays == 31) {
-        countDays += 4;
-    } else if (lastDayOfMonthName == "Sat" && countDays == 30) {
-        countDays += 5;
-    } else if (lastDayOfMonthName == "Sun" && countDays == 31) {
-        countDays += 11;
-    } else if (lastDayOfMonthName == "Sun" && countDays == 30) {
-        countDays += 12;
-    }
+    // if (lastDayOfMonthName == "Mon" && countDays == 31) {
+    //     countDays += 11;
+    // } else if (lastDayOfMonthName == "Mon" && countDays == 30) {
+    //     countDays += 12;
+    // } else if (lastDayOfMonthName == "Tue" && countDays == 31) {
+    //     countDays += 11;
+    // } else if (lastDayOfMonthName == "Tue" && countDays == 30) {
+    //     countDays += 5;
+    // } else if (lastDayOfMonthName == "Wed" && countDays == 31) {
+    //     countDays += 4;
+    // } else if (lastDayOfMonthName == "Wed" && countDays == 30) {
+    //     countDays += 5;
+    // } else if (lastDayOfMonthName == "Thu" && countDays == 31) {
+    //     countDays += 4;
+    // } else if (lastDayOfMonthName == "Thu" && countDays == 30) {
+    //     countDays += 5;
+    // } else if (lastDayOfMonthName == "Fri" && countDays == 31) {
+    //     countDays += 4;
+    // } else if (lastDayOfMonthName == "Fri" && countDays == 30) {
+    //     countDays += 5;
+    // } else if (lastDayOfMonthName == "Sat" && countDays == 31) {
+    //     countDays += 4;
+    // } else if (lastDayOfMonthName == "Sat" && countDays == 30) {
+    //     countDays += 5;
+    // } else if (lastDayOfMonthName == "Sun" && countDays == 31) {
+    //     countDays += 11;
+    // } else if (lastDayOfMonthName == "Sun" && countDays == 30) {
+    //     countDays += 12;
+    // }
 
     //separate check for february
-    if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 28) {
-        countDays += 7;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 29) {
-        countDays += 6;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 28) {
-        countDays += 7;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 29) {
-        countDays += 6;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 28) {
-        countDays += 7;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 29) {
-        countDays += 6;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 28) {
-        countDays += 7;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 29) {
-        countDays += 6;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 28) {
-        countDays += 7;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 29) {
-        countDays += 6;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 28) {
-        countDays += 7;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 29) {
-        countDays += 6;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 28) {
-        countDays += 7;
-    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 29) {
-        countDays += 13;
-    }
+    // if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 28) {
+    //     countDays += 7;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 29) {
+    //     countDays += 6;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 28) {
+    //     countDays += 7;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 29) {
+    //     countDays += 6;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 28) {
+    //     countDays += 7;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 29) {
+    //     countDays += 6;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 28) {
+    //     countDays += 7;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 29) {
+    //     countDays += 6;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 28) {
+    //     countDays += 7;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 29) {
+    //     countDays += 6;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 28) {
+    //     countDays += 7;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 29) {
+    //     countDays += 6;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 28) {
+    //     countDays += 7;
+    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 29) {
+    //     countDays += 13;
+    // }
+
     // alert(countDays);
     // switch (lastDayOfMonthName) {
     //     case 'Mon':
@@ -579,7 +585,7 @@ function genTableBody(dateNum) {
     //         break;
     // }
 
-    for (let i = 0; i < countDays; i++) {
+    for (let i = 0; i < countDays - (7 - emptyCols); i++) {
         if (i % 7 == 0) {
             tr = that.simpleCalendarTable.insertRow();
         }
