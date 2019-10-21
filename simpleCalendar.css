@@ -1,5 +1,4 @@
 table {
-    border-radius: 5px;
     padding: 10px;
 }
 
@@ -9,204 +8,18 @@ th {
 }
 
 th,
-td {
-    padding: 5px;
-    text-align: center;
-    border-radius: 5px;
-}
 
-td:hover {
-    background-color: #381e1d;
-    cursor: pointer;
-}
 
-.hightlight {
+
+
+/* .hightlight {
     background-color: coral;
-}
+} */
 
-.january {
-    background: linear-gradient(to bottom, #33ccff 0%, #005fbd 60%);
-    color: #fff;
-}
-
-.januaryDisabled {
-    color: #a5a5a5;
-}
-
-.januaryHightlight {
-    /* background-color: #33ccff; */
-    background: linear-gradient(to bottom, #005fbd 0%, #33ccff 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.february {
-    background: linear-gradient(to bottom, #a31818 0%, #c37bb1 60%);
-    color: #fff;
-}
-
-.februaryDisabled {
-    color: #a31818;
-}
-
-.februaryHightlight {
-    background: linear-gradient(to bottom, #c37bb1 0%, #a31818 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.march {
-    background: linear-gradient(to bottom, #57a760 0%, #97cca5 60%);
-    color: #fff;
-}
-
-.marchDisabled {
-    color: #57a760;
-}
-
-.marchHightlight {
-    background: linear-gradient(to bottom, #97cca5 0%, #57a760 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.april {
-    background: linear-gradient(to bottom, #bec799 0%, #489290 60%);
-    color: #fff;
-}
-
-.aprilDisabled {
-    color: #a5a5a5;
-}
-
-.aprilHightlight {
-    background: linear-gradient(to bottom, #489290 0%, #bec799 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.may {
-    background: linear-gradient(to bottom, #93f708 0%, #ebf532 60%);
-    color: #1bc015;
-}
-
-.mayDisabled {
-    color: #a5a5a5;
-}
-
-.mayHightlight {
-    background: linear-gradient(to bottom, #ebf532 0%, #93f708 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.june {
-    background: linear-gradient(to bottom, #e3a0f2 20%, #70e0ff 60%);
-    color: #ffec16;
-}
-
-.juneDisabled {
-    color: #494949;
-}
-
-.juneHightlight {
-    background: linear-gradient(to bottom, #70e0ff 0%, #e3a0f2 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.july {
-    background: linear-gradient(to bottom, #a7456d 0%, #353084 60%);
-    color: #e7e8e0;
-}
-
-.julyDisabled {
-    color: #a5a5a5;
-}
-
-.julyHightlight {
-    background: linear-gradient(to bottom, #353084 0%, #a7456d 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.august {
-    background: linear-gradient(to bottom, #fce834 20%, #db8c03 65%);
-    color: #174b7d;
-}
-
-.augustDisabled {
-    color: #707070;
-}
-
-.augustHightlight {
-    background: linear-gradient(to bottom, #db8c03 0%, #fce834 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.september {
-    background: linear-gradient(to bottom, #ce3b51 20%, #e1423a 65%);
-    color: #7e2b02;
-}
-
-.septemberDisabled {
-    color: #6e6e6e;
-}
-
-.septemberHightlight {
-    background: linear-gradient(to bottom, #ce3b51 0%, #ee9b71 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.october {
-    background: linear-gradient(to bottom, #381e1d 20%, #c7160c 65%);
-    color: #f59f0c;
-}
-
-.octoberDisabled {
-    color: #777676;
-}
-
-.octoberHightlight {
-    background: linear-gradient(to bottom, #c7160c 0%, #381e1d 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.november {
-    background: linear-gradient(to bottom, #ac430c 20%, #dc7500 65%);
-    color: #ffc31f;
-}
-
-.novemberDisabled {
-    color: #808080;
-}
-
-.novemberHightlight {
-    background: linear-gradient(to bottom, #dc7500 0%, #ac430c 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
-
-.december {
-    background: linear-gradient(to bottom, #283d3b 20%, #197278 65%);
-    color: #edddd4;
-}
-
-.decemberDisabled {
-    color: #a5a5a5;
-}
-
-.decemberHightlight {
-    background: linear-gradient(to bottom, #197278 0%, #283d3b 150%);
-    font-weight: bold;
-    font-size: 160%;
-}
 
 button {
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    border: 0px;
     width: 15%;
     height: 30px;
     /* margin-left: calc(100% - 5em) / 2; */
@@ -216,7 +29,29 @@ button {
 select,
 .monthName {
     display: inline-block;
-    border-radius: 5px;
     height: 30px;
     width: 67%;
+}
+
+
+
+#simpleCalendar{
+    border: 1px solid black;
+}
+
+.highlight{
+    border: 1px solid black;
+    background-color: #ef4f69;
+    color: white;
+}
+
+.disabled{
+    color: darkgrey;
+}
+
+
+td {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid black;
 }
