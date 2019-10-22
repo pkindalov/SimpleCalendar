@@ -504,6 +504,9 @@ function genTableBody(dateNum) {
     let pastTheMont = false;
 
     //Show 2 weeks after the last day of the current month.     
+
+
+
     // if (lastDayOfMonthName == "Mon" && countDays == 31) {
     //     countDays += 11;
     // } else if (lastDayOfMonthName == "Mon" && countDays == 30) {
