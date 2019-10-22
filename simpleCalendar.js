@@ -504,7 +504,35 @@ function genTableBody(dateNum) {
     let pastTheMont = false;
 
     //Show 2 weeks after the last day of the current month.     
-
+    if (lastDayOfMonthName == "Mon" && countDays == 31) {
+        countDays += 13;
+    } else if (lastDayOfMonthName == "Mon" && countDays == 30) {
+        countDays += 13;
+    } else if (lastDayOfMonthName == "Tue" && countDays == 30) {
+        countDays += 12;
+    } else if (lastDayOfMonthName == "Tue" && countDays == 31) {
+        countDays += 12;
+    } else if (lastDayOfMonthName == "Wed" && countDays == 30) {
+        countDays += 11;
+    } else if (lastDayOfMonthName == "Wed" && countDays == 31) {
+        countDays += 11;
+    } else if (lastDayOfMonthName == "Thu" && countDays == 30) {
+        countDays += 10;
+    } else if (lastDayOfMonthName == "Thu" && countDays == 31) {
+        countDays += 10;
+    } else if (lastDayOfMonthName == "Fri" && countDays == 30) {
+        countDays += 16;
+    } else if (lastDayOfMonthName == "Fri" && countDays == 31) {
+        countDays += 16;
+    } else if (lastDayOfMonthName == "Sat" && countDays == 30) {
+        countDays += 15;
+    } else if (lastDayOfMonthName == "Sat" && countDays == 31) {
+        countDays += 15;
+    } else if (lastDayOfMonthName == "Sun" && countDays == 30) {
+        countDays += 14;
+    } else if (lastDayOfMonthName == "Sun" && countDays == 31) {
+        countDays += 14;
+    }
 
 
     // if (lastDayOfMonthName == "Mon" && countDays == 31) {
@@ -615,7 +643,7 @@ function genTableBody(dateNum) {
             if (pastTheMont) {
                 // let disabledDatesCell = tr.insertCell();
                 todayCell.innerHTML = `${dateNum}`;
-                todayCell.setAttribute(`class`, `day${dateNum} ${that.seasonTheme}Disabled`);
+                todayCell.setAttribute(`class`, `day${dateNum} ${that.seasonTheme}Disabled disabled`);
             } else {
                 todayCell.onclick = e => showDate(e);
                 todayCell.setAttribute(`class`, `day${dateNum}`);
