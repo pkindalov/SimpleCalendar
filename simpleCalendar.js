@@ -271,19 +271,19 @@ function genCalTopRow(LANGUAGE) {
             return `<table class=${that.seasonTheme} id="simpleCalendar">
               <tr>
                 <th colspan="7">
-                    <button class="${that.seasonTheme}" onclick="prevMonth(LANGUAGE);">&lt;</button><div class="monthName">${monthName} ${that.year}</div>
-                    <button class="${that.seasonTheme}" onclick="nextMonth(LANGUAGE);">&gt;</button>
+                    <button class="${that.seasonTheme} arrow" onclick="prevMonth(LANGUAGE);">&lt;</button><div class="monthName">${monthName} ${that.year}</div>
+                    <button class="${that.seasonTheme} arrow" onclick="nextMonth(LANGUAGE);">&gt;</button>
                 </th>
                 </tr>  
             
-              <tr>
-                <th id="Mon">Пон.</th>
-                <th id="Tue">Вто.</th>
-                <th id="Wed">Сря.</th>
-                <th id="Thu">Чет.</th>
-                <th id="Fri">Пет.</th>
-                <th id="Sat">Съб.</th>
-                <th id="Sun">Нед.</th>
+              <tr">
+                <th class="weekDays id="Mon">Пон.</th>
+                <th class="weekDays id="Tue">Вто.</th>
+                <th class="weekDays id="Wed">Сря.</th>
+                <th class="weekDays id="Thu">Чет.</th>
+                <th class="weekDays id="Fri">Пет.</th>
+                <th class="weekDays id="Sat">Съб.</th>
+                <th class="weekDays id="Sun">Нед.</th>
               </tr>
             </table>  
             `;
@@ -566,35 +566,36 @@ function genTableBody(dateNum) {
     // }
 
     //separate check for february
-    // if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 28) {
-    //     countDays += 7;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 29) {
-    //     countDays += 6;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 28) {
-    //     countDays += 7;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 29) {
-    //     countDays += 6;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 28) {
-    //     countDays += 7;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 29) {
-    //     countDays += 6;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 28) {
-    //     countDays += 7;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 29) {
-    //     countDays += 6;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 28) {
-    //     countDays += 7;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 29) {
-    //     countDays += 6;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 28) {
-    //     countDays += 7;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 29) {
-    //     countDays += 6;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 28) {
-    //     countDays += 7;
-    // } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 29) {
-    //     countDays += 13;
-    // }
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ДА ГИ ПРОВЕРЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 29) {
+        countDays += 6;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 29) {
+        countDays += 8;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 28) {
+        countDays += 7;
+    } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 29) {
+        countDays += 13;
+    }
 
     // alert(countDays);
     // switch (lastDayOfMonthName) {
