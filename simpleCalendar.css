@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css?family=Concert+One&display=swap');
 
 table {
-    padding: 10px;
+    /* padding: 10px; */
     border-spacing: 0;
     border-collapse: collapse;
     /* font-family: 'Lobster', cursive; */
@@ -16,7 +16,7 @@ table {
 }
 
 th {
-    font-size: 90%;
+    /* font-size: 90%; */
     /* border: 1px solid black; */
 }
 
@@ -34,7 +34,7 @@ button {
     /* border-radius: 5px; */
     border: 0px;
     width: 15%;
-    height: 30px;
+    /* height: 30px; */
     background-color: white;
     /* margin-left: calc(100% - 5em) / 2; */
     /* margin-right: 15%; */
@@ -43,7 +43,7 @@ button {
 select,
 .monthName {
     display: inline-block;
-    height: 30px;
+    /* height: 30px; */
     width: 67%;
 }
 
@@ -66,7 +66,7 @@ select,
 
 
 td {
-    padding: 20px;
+    /* padding: 20px; */
     text-align: center;
     border-right: 1px solid #c7c5c5;
     border-bottom: 1px solid #c7c5c5;
@@ -75,7 +75,7 @@ td {
 }
 
 td:nth-child(6), td:nth-child(7){
-    background-color: #ef4f69;
+    background-color: #948f90;
     color: white;
 }
 
@@ -92,13 +92,43 @@ td:hover{
 .arrow{
     font-weight: bold;
     color: #ef4f69;
-    font-size: 30px;
+    /* font-size: 30px; */
 }
 
 .weekDays{
-    padding: 20px;
+    /* padding: 20px; */
+    color: white;
+    background-color: #ef4f69;
 }
+
 
 /* table tr:nth-of-type(4n) td {
     border-right: 3px solid #f00;
 } */
+
+@media (min-width: 240px) {
+    html { 
+        font-size: 0.2rem; 
+        padding: 5px;
+    }
+}
+@media (min-width: 320px) {
+    html { 
+        font-size: 0.6rem; 
+    }td {padding: 2px;}
+}
+@media (min-width: 576px) {
+    html { font-size: 0.65rem; padding: 5px; }td {padding: 5px;}
+}
+@media (min-width: 768px) {
+    html { font-size: 0.75rem;padding: 5px;}
+    td {padding: 10px;}
+}
+@media (min-width: 992px) {
+    html { font-size: 0.95rem; padding: 5px;}
+    td {padding: 20px;}
+}
+@media (min-width: 1200px) {
+    html { font-size: 1rem; }
+    td {padding: 20px;}
+}

@@ -397,10 +397,10 @@ function getCurrentMonthName(LANGUAGE) {
             case "Sep":
                 monthName = "September";
                 break;
-            case "Oct":
-                monthName = "October";
+            case "Oct": genSec
+                monthNagenSec
                 break;
-            case "Nov":
+            case "Nov": genSec
                 monthName = "November";
                 break;
             case "Dec":
@@ -566,7 +566,7 @@ function genTableBody(dateNum) {
     // }
 
     //separate check for february
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ДА ГИ ПРОВЕРЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ДА ГИ ПРОВЕРЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!g
     if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 28) {
         countDays += 7;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 29) {
