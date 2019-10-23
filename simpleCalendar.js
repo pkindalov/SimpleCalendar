@@ -12,6 +12,7 @@ that.simpleCalendarTable = document.getElementById("simpleCalendar");
 that.todayDate = new Date().getDate();
 that.listOfYearsContainer = document.getElementById('listOfYears');
 that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+that.monthBgNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
 let dayName = getDayName(that.firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
 let dateNum = genCalSecondRow();
@@ -400,10 +401,12 @@ function getCurrentMonthName(LANGUAGE) {
             case "Sep":
                 monthName = "September";
                 break;
-            case "Oct": genSec
+            case "Oct":
+                genSec
                 monthNagenSec
                 break;
-            case "Nov": genSec
+            case "Nov":
+                genSec
                 monthName = "November";
                 break;
             case "Dec":
@@ -684,6 +687,57 @@ function showDisabledDatePrev(e) {
     console.log(date);
 }
 
+//recursively remove table rows
+function removeTableRows(rowIndex, length, table) {
+
+    if (rowIndex >= length) return;
+    if (table.rows[rowIndex].className == "tableBodyCell") {
+        table.deleteRow(rowIndex);
+        rowIndex--;
+    }
+    removeTableRows(rowIndex + 1, table.rows.length, table);
+
+}
+
+function changeMonth(e) {
+    // alert(e.target.innerHTML);
+    let index = that.monthBgNames.indexOf(e.target.innerHTML);
+    if (index < 0) {
+        alert('Няма такъв месец');
+    }
+
+    that.monthGlobal = index;
+
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
+    let dateNum = genCalSecondRow(that.monthGlobal);
+
+    // console.log("Prev: " + that.monthGlobal);
+    genTableBody(dateNum);
+
+
+
+}
+
+
+function appendMonths(table) {
+    // let table = document.getElementById("simpleCalendar");
+    let tr = '';
+    let td = '';
+
+    for (let m = 0; m < that.monthBgNames.length; m++) {
+        if (m % 7 == 0) {
+            tr = table.insertRow();
+        }
+
+        td = tr.insertCell();
+        td.innerHTML = `${that.monthBgNames[m]}`;
+        td.onclick = (e) => changeMonth(e);
+    }
+}
 
 
 function showMonths() {
@@ -710,6 +764,8 @@ function showMonths() {
         secondRow.parentNode.removeChild(secondRow);
     }
 
+    removeTableRows(0, table.rows.length, table);
+    appendMonths(table);
 
 
     // for (let r = 0; r < tableBodyRows.length; r++) {
