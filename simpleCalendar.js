@@ -86,10 +86,10 @@ function prevMonth() {
 
     // console.log("Prev: " + that.monthGlobal);
     genTableBody(dateNum);
-    let yearsOptions = document.getElementById("listOfYears");
-    yearsOptions.children[0].value = that.year;
-    yearsOptions.children[0].innerText = that.year;
-    genYearsOptions(that.year);
+    // let yearsOptions = document.getElementById("listOfYears");
+    // yearsOptions.children[0].value = that.year;
+    // yearsOptions.children[0].innerText = that.year;
+    // genYearsOptions(that.year);
     // console.log(that.prevNextButtonsYear);
     // alert(dateNum);
 }
@@ -113,10 +113,10 @@ function nextMonth() {
 
     // console.log("Next: " + that.monthGlobal);
     genTableBody(dateNum);
-    let yearsOptions = document.getElementById("listOfYears");
-    yearsOptions.children[0].value = that.year;
-    yearsOptions.children[0].innerText = that.year;
-    genYearsOptions(that.year);
+    // let yearsOptions = document.getElementById("listOfYears");
+    // yearsOptions.children[0].value = that.year;
+    // yearsOptions.children[0].innerText = that.year;
+    // genYearsOptions(that.year);
 
     // var that = this;
     // that.monthGlobal = that.monthGlobal + 1;
@@ -152,10 +152,10 @@ function nextYear() {
 
     // console.log("Next: " + that.monthGlobal);
     genTableBody(dateNum);
-    let yearsOptions = document.getElementById("listOfYears");
-    yearsOptions.children[0].value = that.year;
-    yearsOptions.children[0].innerText = that.year;
-    genYearsOptions(that.year);
+    // let yearsOptions = document.getElementById("listOfYears");
+    // yearsOptions.children[0].value = that.year;
+    // yearsOptions.children[0].innerText = that.year;
+    // genYearsOptions(that.year);
 
 
 }
@@ -204,54 +204,54 @@ function prevYear() {
 
     // console.log("Next: " + that.monthGlobal);
     genTableBody(dateNum);
-    let yearsOptions = document.getElementById("listOfYears");
-    yearsOptions.children[0].value = that.year;
-    yearsOptions.children[0].innerText = that.year;
-    genYearsOptions(that.year);
+    // let yearsOptions = document.getElementById("listOfYears");
+    // yearsOptions.children[0].value = that.year;
+    // yearsOptions.children[0].innerText = that.year;
+    // genYearsOptions(that.year);
 }
 
-function genYearsOptions(years) {
-    let listOfYears = years;
-    let option = '';
-    for (let i = 0; i < 50; i++) {
-        listOfYears--;
-        option = document.createElement('option');
-        option.text = listOfYears;
-        option.value = listOfYears;
-        that.listOfYearsContainer = document.getElementById('listOfYears');
-        that.listOfYearsContainer.appendChild(option);
-    }
+// function genYearsOptions(years) {
+//     let listOfYears = years;
+//     let option = '';
+//     for (let i = 0; i < 50; i++) {
+//         listOfYears--;
+//         option = document.createElement('option');
+//         option.text = listOfYears;
+//         option.value = listOfYears;
+//         that.listOfYearsContainer = document.getElementById('listOfYears');
+//         that.listOfYearsContainer.appendChild(option);
+//     }
 
-}
+// }
 
 function chooseYear() {
     // let select = document.createElement('select');
     // select.setAttribute('id', "listOfYears");
 
-    genYearsOptions(that.year);
+    // genYearsOptions(that.year);
 
-    let selYear = document.getElementById("listOfYears").value;
-    document.getElementById("listOfYears").onchange = function (e) {
-        selYear = parseInt(this.value);
+    // let selYear = document.getElementById("listOfYears").value;
+    // document.getElementById("listOfYears").onchange = function (e) {
+    //     selYear = parseInt(this.value);
 
-        //TO DRAW UPDATED MONTH HERE
-        // that.seasonTheme = getSeasonTheme();
+    //     //TO DRAW UPDATED MONTH HERE
+    //     // that.seasonTheme = getSeasonTheme();
 
-        that.firstDayOfMonth = new Date(selYear, that.monthGlobal).toString();
-        that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-        let topRow = genCalTopRow(LANGUAGE);
-        that.simpleCalendarContainer.innerHTML = "";
-        that.simpleCalendarContainer.innerHTML += topRow;
-        let dateNum = genCalSecondRow(that.monthGlobal);
+    //     that.firstDayOfMonth = new Date(selYear, that.monthGlobal).toString();
+    //     that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    //     let topRow = genCalTopRow(LANGUAGE);
+    //     that.simpleCalendarContainer.innerHTML = "";
+    //     that.simpleCalendarContainer.innerHTML += topRow;
+    //     let dateNum = genCalSecondRow(that.monthGlobal);
 
-        // console.log("Next: " + that.monthGlobal);
-        genTableBody(dateNum);
+    //     // console.log("Next: " + that.monthGlobal);
+    //     genTableBody(dateNum);
 
-        let yearsOptions = document.getElementById("listOfYears");
-        yearsOptions.children[0].value = selYear;
-        yearsOptions.children[0].innerText = selYear;
-        that.prevNextButtonsYear = selYear;
-    }
+    //     let yearsOptions = document.getElementById("listOfYears");
+    //     yearsOptions.children[0].value = selYear;
+    //     yearsOptions.children[0].innerText = selYear;
+    //     that.prevNextButtonsYear = selYear;
+    // }
 
     // console.log(that.prevNextButtonsYear);
     // that.simpleCalendarContainer.appendChild(select);
@@ -428,6 +428,7 @@ function genCalSecondRow() {
             let newTd = that.simpleCalendarTable.insertCell();
             newTd.innerHTML = `${prevMontStart}`;
             newTd.setAttribute("class", `${that.seasonTheme}Disabled disabled`);
+            newTd.onclick = e => showDisabledDatePrev(e);
             // secondRow.innerHTML += `<td class="${seasonTheme}Disabled">${prevMontStart}</td>`;
             prevMontStart++;
         } else {
@@ -645,6 +646,7 @@ function genTableBody(dateNum) {
                 // let disabledDatesCell = tr.insertCell();
                 todayCell.innerHTML = `${dateNum}`;
                 todayCell.setAttribute(`class`, `day${dateNum} ${that.seasonTheme}Disabled disabled`);
+                todayCell.onclick = e => showDisabledDateNext(e);
             } else {
                 todayCell.onclick = e => showDate(e);
                 todayCell.setAttribute(`class`, `day${dateNum}`);
@@ -656,8 +658,24 @@ function genTableBody(dateNum) {
 }
 
 function showDate(e) {
-    console.log(e.target.innerHTML);
-    // alert(num);
+    let dateStr = that.year + '-' + (that.monthGlobal + 1) + '-' + e.target.innerHTML;
+    let date = new Date(dateStr);
+    console.log(dateStr);
+    console.log(date);
+}
+
+function showDisabledDateNext(e) {
+    let dateStr = that.year + '-' + (that.monthGlobal + 2) + '-' + e.target.innerHTML;
+    let date = new Date(dateStr);
+    console.log(dateStr);
+    console.log(date);
+}
+
+function showDisabledDatePrev(e) {
+    let dateStr = that.year + '-' + (that.monthGlobal) + '-' + e.target.innerHTML;
+    let date = new Date(dateStr);
+    console.log(dateStr);
+    console.log(date);
 }
 
 genTableBody(dateNum);

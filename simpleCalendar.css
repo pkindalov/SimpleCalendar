@@ -33,7 +33,7 @@ th {
 button {
     /* border-radius: 5px; */
     border: 0px;
-    width: 15%;
+    /* width: 15%; */
     /* height: 30px; */
     background-color: white;
     /* margin-left: calc(100% - 5em) / 2; */
@@ -44,7 +44,7 @@ select,
 .monthName {
     display: inline-block;
     /* height: 30px; */
-    width: 67%;
+    /* width: 67%; */
 }
 
 
@@ -107,28 +107,32 @@ td:hover{
 } */
 
 @media (min-width: 240px) {
-    html { 
-        font-size: 0.2rem; 
-        padding: 5px;
-    }
+    html { font-size: 0.2rem; padding: 5px;}
+    .monthName{ padding-top: 2px; padding-bottom: 2px; }
+    .arrow{ font-size: 5px;}
 }
 @media (min-width: 320px) {
-    html { 
-        font-size: 0.6rem; 
-    }td {padding: 2px;}
+    html { font-size: 0.6rem; }
+    td {padding: 10px;}
+    .monthName{ padding-top: 10px; padding-bottom: 10px;}
 }
 @media (min-width: 576px) {
     html { font-size: 0.65rem; padding: 5px; }td {padding: 5px;}
+    .monthName{ padding-top: 10px; padding-bottom: 10px;}
 }
 @media (min-width: 768px) {
     html { font-size: 0.75rem;padding: 5px;}
     td {padding: 10px;}
+    .monthName{ padding-top: 15px; padding-bottom: 15px;}
 }
 @media (min-width: 992px) {
     html { font-size: 0.95rem; padding: 5px;}
     td {padding: 20px;}
+    .monthName{ padding-top: 15px; padding-bottom: 15px;}
 }
 @media (min-width: 1200px) {
     html { font-size: 1rem; }
     td {padding: 20px;}
+    .monthName{ padding-top: 15px; padding-bottom: 15px;}
+    .arrow{ font-size: 20px;}
 }
