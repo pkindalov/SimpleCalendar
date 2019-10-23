@@ -15,13 +15,16 @@ table {
     font-family: 'Concert One', cursive;
 }
 
-th {
+/* th { */
     /* font-size: 90%; */
     /* border: 1px solid black; */
+/* } */
+
+
+a{
+    text-decoration:  none;
+    color: black;
 }
-
-
-
 
 
 

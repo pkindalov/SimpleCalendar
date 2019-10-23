@@ -271,7 +271,10 @@ function genCalTopRow(LANGUAGE) {
             return `<table class=${that.seasonTheme} id="simpleCalendar">
               <tr>
                 <th colspan="7">
-                    <button class="${that.seasonTheme} arrow" onclick="prevMonth(LANGUAGE);">&lt;</button><div class="monthName">${monthName} ${that.year}</div>
+                    <button class="${that.seasonTheme} arrow" onclick="prevMonth(LANGUAGE);">&lt;</button>
+                        <div class="monthName">
+                            <a href="#" onclick="showMonths();">${monthName}</a> ${that.year}
+                        </div>
                     <button class="${that.seasonTheme} arrow" onclick="nextMonth(LANGUAGE);">&gt;</button>
                 </th>
                 </tr>  
@@ -421,6 +424,7 @@ function genCalSecondRow() {
     let prevMontStart = previousMontDays + 1 - that.emptyCols;
     that.simpleCalendarTable = document.getElementById("simpleCalendar");
     that.simpleCalendarTable = that.simpleCalendarTable.insertRow();
+    that.simpleCalendarTable.setAttribute('id', 'secondRow');
 
 
     for (let i = 0; i < DAYS_COUNT; i++) {
@@ -498,6 +502,7 @@ function genTableBody(dateNum) {
     let currentMonthDays = countDays;
     let lastDayOfMonthName = currentDate.split(" ")[0];
     that.simpleCalendarTable = document.getElementById("simpleCalendar");
+
 
     // alert(currentDate);
     let tr = "";
@@ -614,6 +619,7 @@ function genTableBody(dateNum) {
     for (let i = 0; i < countDays - (7 - emptyCols); i++) {
         if (i % 7 == 0) {
             tr = that.simpleCalendarTable.insertRow();
+            tr.setAttribute('class', 'tableBodyCell');
         }
         if (dateNum > currentMonthDays || dateNum > 31) {
             dateNum = 1;
@@ -676,6 +682,45 @@ function showDisabledDatePrev(e) {
     let date = new Date(dateStr);
     console.log(dateStr);
     console.log(date);
+}
+
+
+
+function showMonths() {
+    let table = document.getElementById("simpleCalendar");
+    let secondRow = document.getElementById('secondRow');
+    // let currentRow = '';
+
+    // for (let r = 0; r < table.rows.length; r++) {
+    //     currentRow = table.rows[r];
+    //     if (currentRow.id && currentRow.id == 'secondRow') {
+    //         table.deleteRow(r);
+    //     }
+
+    //     if (currentRow.className && currentRow.className == 'tableBodyCell') {
+    //         table.deleteRow(r);
+    //     }
+    // }
+
+    // console.log(table.rows.length);
+    let tableBodyRows = document.getElementsByClassName('tableBodyCell');
+
+    // console.log(tableBodyRows);
+    if (secondRow) {
+        secondRow.parentNode.removeChild(secondRow);
+    }
+
+
+
+    // for (let r = 0; r < tableBodyRows.length; r++) {
+    //     tableBodyRows[r].remove();
+    //     // tableBodyRows[r].parentNode.removeChild(tableBodyRows[r]);
+    // }
+
+    // tableBodyRows.parentNode.removeChild(tableBodyRows);
+    // that.simpleCalendarTable.deleteRow(secondRow);
+    // that.simpleCalendarTable = that.simpleCalendarTable.deleteRow(tableBody);
+
 }
 
 genTableBody(dateNum);
