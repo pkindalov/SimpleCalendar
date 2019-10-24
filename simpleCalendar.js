@@ -744,6 +744,14 @@ function appendYears(table) {
     let yearsBack = that.year - 20;
 
     for (let m = 0; m < 20; m++) {
+        if (m == 0) {
+            tr = table.insertRow();
+            tr.innerHTML = `<td colspan="5">
+                <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
+            </td>`;
+        }
+
+
         if (m % 5 == 0) {
             tr = table.insertRow();
         }
@@ -759,7 +767,7 @@ function appendYears(table) {
         }
 
         td = tr.insertCell();
-        td.innerHTML = `${that.year++}`;
+        td.innerHTML = `${yearsBack++}`;
         td.onclick = (e) => changeYear(e);
     }
 
@@ -772,6 +780,13 @@ function appendMonths(table) {
     let td = '';
 
     for (let m = 0; m < that.monthBgNames.length; m++) {
+        if (m == 0) {
+            tr = table.insertRow();
+            tr.innerHTML = `<td colspan="3">
+                <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
+            </td>`;
+        }
+
         if (m % 3 == 0) {
             tr = table.insertRow();
         }
@@ -780,6 +795,19 @@ function appendMonths(table) {
         td.innerHTML = `${that.monthBgNames[m]}`;
         td.onclick = (e) => changeMonth(e);
     }
+}
+
+function closeMe() {
+    // window.location.reload();
+
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
+    let dateNum = genCalSecondRow(that.monthGlobal);
+
+    // console.log("Prev: " + that.monthGlobal);
+    genTableBody(dateNum);
 }
 
 
