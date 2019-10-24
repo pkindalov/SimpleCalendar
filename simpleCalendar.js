@@ -274,7 +274,8 @@ function genCalTopRow(LANGUAGE) {
                 <th colspan="7">
                     <button class="${that.seasonTheme} arrow" onclick="prevMonth(LANGUAGE);">&lt;</button>
                         <div class="monthName">
-                            <a href="#" onclick="showMonths();">${monthName}</a> ${that.year}
+                            <a href="#" onclick="showMonths();">${monthName}</a> 
+                            <a href="#" onclick="showYears();">${that.year}</a>
                         </div>
                     <button class="${that.seasonTheme} arrow" onclick="nextMonth(LANGUAGE);">&gt;</button>
                 </th>
@@ -666,6 +667,7 @@ function genTableBody(dateNum) {
     }
 }
 
+
 function showDate(e) {
     let dateStr = that.year + '-' + (that.monthGlobal + 1) + '-' + e.target.innerHTML;
     let date = new Date(dateStr);
@@ -717,11 +719,48 @@ function changeMonth(e) {
 
     // console.log("Prev: " + that.monthGlobal);
     genTableBody(dateNum);
-
-
-
 }
 
+function changeYear(e) {
+    that.year = parseInt(e.target.innerHTML);
+
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
+    let dateNum = genCalSecondRow(that.monthGlobal);
+
+    // console.log("Prev: " + that.monthGlobal);
+    genTableBody(dateNum);
+}
+
+function appendYears(table) {
+    let tr = '';
+    let td = '';
+    let yearsBack = that.year - 21;
+
+    for (let m = 0; m < 21; m++) {
+        if (m % 7 == 0) {
+            tr = table.insertRow();
+        }
+
+        td = tr.insertCell();
+        td.innerHTML = `${yearsBack++}`;
+        td.onclick = (e) => changeYear(e);
+    }
+
+    for (let m = 0; m < 21; m++) {
+        if (m % 7 == 0) {
+            tr = table.insertRow();
+        }
+
+        td = tr.insertCell();
+        td.innerHTML = `${that.year++}`;
+        td.onclick = (e) => changeYear(e);
+    }
+
+}
 
 function appendMonths(table) {
     // let table = document.getElementById("simpleCalendar");
@@ -777,6 +816,18 @@ function showMonths() {
     // that.simpleCalendarTable.deleteRow(secondRow);
     // that.simpleCalendarTable = that.simpleCalendarTable.deleteRow(tableBody);
 
+}
+
+function showYears() {
+    let table = document.getElementById("simpleCalendar");
+    let secondRow = document.getElementById('secondRow');
+    let tableBodyRows = document.getElementsByClassName('tableBodyCell');
+    if (secondRow) {
+        secondRow.parentNode.removeChild(secondRow);
+    }
+
+    removeTableRows(0, table.rows.length, table);
+    appendYears(table);
 }
 
 genTableBody(dateNum);
