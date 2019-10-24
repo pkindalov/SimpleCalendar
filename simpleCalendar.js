@@ -531,17 +531,17 @@ function genTableBody(dateNum) {
     } else if (lastDayOfMonthName == "Thu" && countDays == 31) {
         countDays += 10;
     } else if (lastDayOfMonthName == "Fri" && countDays == 30) {
-        countDays += 16;
+        countDays += 9;
     } else if (lastDayOfMonthName == "Fri" && countDays == 31) {
-        countDays += 16;
+        countDays += 9;
     } else if (lastDayOfMonthName == "Sat" && countDays == 30) {
-        countDays += 15;
+        countDays += 8;
     } else if (lastDayOfMonthName == "Sat" && countDays == 31) {
-        countDays += 15;
+        countDays += 8;
     } else if (lastDayOfMonthName == "Sun" && countDays == 30) {
-        countDays += 14;
+        countDays += 7;
     } else if (lastDayOfMonthName == "Sun" && countDays == 31) {
-        countDays += 14;
+        countDays += 7;
     }
 
 
@@ -737,6 +737,8 @@ function changeYear(e) {
 }
 
 function appendYears(table) {
+    table.innerHTML = '';
+
     let tr = '';
     let td = '';
     let yearsBack = that.year - 20;
@@ -764,6 +766,7 @@ function appendYears(table) {
 }
 
 function appendMonths(table) {
+    table.innerHTML = '';
     // let table = document.getElementById("simpleCalendar");
     let tr = '';
     let td = '';
