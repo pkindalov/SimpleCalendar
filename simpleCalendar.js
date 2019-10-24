@@ -746,7 +746,7 @@ function appendYears(table) {
     for (let m = 0; m < 20; m++) {
         if (m == 0) {
             tr = table.insertRow();
-            tr.innerHTML = `<td colspan="5">
+            tr.innerHTML = `<td class="closeBtn" colspan="5">
                 <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
             </td>`;
         }
@@ -767,9 +767,14 @@ function appendYears(table) {
         }
 
         td = tr.insertCell();
+        if (yearsBack == that.year) {
+            td.setAttribute('class', 'highlight');
+        }
+        console.log(yearsBack);
         td.innerHTML = `${yearsBack++}`;
         td.onclick = (e) => changeYear(e);
     }
+
 
 }
 
@@ -782,7 +787,7 @@ function appendMonths(table) {
     for (let m = 0; m < that.monthBgNames.length; m++) {
         if (m == 0) {
             tr = table.insertRow();
-            tr.innerHTML = `<td colspan="3">
+            tr.innerHTML = `<td class="closeBtn" colspan="3">
                 <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
             </td>`;
         }
@@ -794,6 +799,10 @@ function appendMonths(table) {
         td = tr.insertCell();
         td.innerHTML = `${that.monthBgNames[m]}`;
         td.onclick = (e) => changeMonth(e);
+        if (m == that.monthGlobal) {
+            td.setAttribute('class', 'highlight');
+        }
+
     }
 }
 
