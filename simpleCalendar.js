@@ -450,6 +450,9 @@ function genCalSecondRow() {
             } else {
                 let thirdCell = that.simpleCalendarTable.insertCell();
                 thirdCell.innerHTML = `${startDate}`;
+                if (i == DAYS_COUNT - 2 || i == DAYS_COUNT - 1) {
+                    thirdCell.setAttribute('class', 'saturdaySunday');
+                }
                 thirdCell.onclick = e => showDate(e);
 
                 // secondRow.innerHTML += `<td id="${startDate}">${startDate}</td>`;
@@ -619,8 +622,11 @@ function genTableBody(dateNum) {
     //         countDays += 4;
     //         break;
     // }
+    let rows = countDays - (7 - emptyCols);
+    let startDayIndex = 5;
+    let pairCount = 0;
 
-    for (let i = 0; i < countDays - (7 - emptyCols); i++) {
+    for (let i = 0; i < rows; i++) {
         if (i % 7 == 0) {
             tr = that.simpleCalendarTable.insertRow();
             tr.setAttribute('class', 'tableBodyCell');
@@ -628,6 +634,7 @@ function genTableBody(dateNum) {
         if (dateNum > currentMonthDays || dateNum > 31) {
             dateNum = 1;
             pastTheMont = true;
+            startDayIndex = i + 7;
         }
 
         // td = tr.insertCell();
@@ -652,6 +659,7 @@ function genTableBody(dateNum) {
         } else {
             let todayCell = tr.insertCell();
             todayCell.innerHTML = `${dateNum}`;
+
             if (pastTheMont) {
                 // let disabledDatesCell = tr.insertCell();
                 todayCell.innerHTML = `${dateNum}`;
@@ -660,11 +668,23 @@ function genTableBody(dateNum) {
             } else {
                 todayCell.onclick = e => showDate(e);
                 todayCell.setAttribute(`class`, `day${dateNum}`);
+
+                if (i == startDayIndex || i == (startDayIndex + 1)) {
+                    todayCell.setAttribute('class', `day${dateNum} saturdaySunday`);
+                    pairCount++;
+                    if (pairCount == 2) {
+                        pairCount = 0;
+                        startDayIndex += 7;
+
+                    }
+                }
+
             }
         }
 
         dateNum++;
     }
+
 }
 
 
