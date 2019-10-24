@@ -718,6 +718,7 @@ function changeMonth(e) {
     let dateNum = genCalSecondRow(that.monthGlobal);
 
     // console.log("Prev: " + that.monthGlobal);
+    // genTableBody(dateNum);
     genTableBody(dateNum);
 }
 
@@ -738,10 +739,10 @@ function changeYear(e) {
 function appendYears(table) {
     let tr = '';
     let td = '';
-    let yearsBack = that.year - 21;
+    let yearsBack = that.year - 20;
 
-    for (let m = 0; m < 21; m++) {
-        if (m % 7 == 0) {
+    for (let m = 0; m < 20; m++) {
+        if (m % 5 == 0) {
             tr = table.insertRow();
         }
 
@@ -751,7 +752,7 @@ function appendYears(table) {
     }
 
     for (let m = 0; m < 21; m++) {
-        if (m % 7 == 0) {
+        if (m % 5 == 0) {
             tr = table.insertRow();
         }
 
@@ -768,7 +769,7 @@ function appendMonths(table) {
     let td = '';
 
     for (let m = 0; m < that.monthBgNames.length; m++) {
-        if (m % 7 == 0) {
+        if (m % 3 == 0) {
             tr = table.insertRow();
         }
 
