@@ -281,7 +281,7 @@ function genCalTopRow(LANGUAGE) {
                 </th>
                 </tr>  
             
-              <tr">
+              <tr id="weekDaysRow">
                 <th class="weekDays id="Mon">Пон.</th>
                 <th class="weekDays id="Tue">Вто.</th>
                 <th class="weekDays id="Wed">Сря.</th>
@@ -781,6 +781,7 @@ function appendMonths(table) {
 
 function showMonths() {
     let table = document.getElementById("simpleCalendar");
+    let weekDaysRow = document.getElementById('weekDaysRow');
     let secondRow = document.getElementById('secondRow');
     // let currentRow = '';
 
@@ -803,6 +804,11 @@ function showMonths() {
         secondRow.parentNode.removeChild(secondRow);
     }
 
+    if (weekDaysRow) {
+        weekDaysRow.parentNode.removeChild(weekDaysRow);
+    }
+
+
     removeTableRows(0, table.rows.length, table);
     appendMonths(table);
 
@@ -822,8 +828,14 @@ function showYears() {
     let table = document.getElementById("simpleCalendar");
     let secondRow = document.getElementById('secondRow');
     let tableBodyRows = document.getElementsByClassName('tableBodyCell');
+    let weekDaysRow = document.getElementById('weekDaysRow');
+
     if (secondRow) {
         secondRow.parentNode.removeChild(secondRow);
+    }
+
+    if (weekDaysRow) {
+        weekDaysRow.parentNode.removeChild(weekDaysRow);
     }
 
     removeTableRows(0, table.rows.length, table);
