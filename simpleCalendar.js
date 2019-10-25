@@ -283,13 +283,13 @@ function genCalTopRow(LANGUAGE) {
                 </tr>  
             
               <tr id="weekDaysRow">
-                <th class="weekDays id="Mon">Пон.</th>
-                <th class="weekDays id="Tue">Вто.</th>
-                <th class="weekDays id="Wed">Сря.</th>
-                <th class="weekDays id="Thu">Чет.</th>
-                <th class="weekDays id="Fri">Пет.</th>
-                <th class="weekDays id="Sat">Съб.</th>
-                <th class="weekDays id="Sun">Нед.</th>
+                <th class="weekDays" id="Mon">Пон.</th>
+                <th class="weekDays" id="Tue">Вто.</th>
+                <th class="weekDays" id="Wed">Сря.</th>
+                <th class="weekDays" id="Thu">Чет.</th>
+                <th class="weekDays" id="Fri">Пет.</th>
+                <th class="weekDays" id="Sat">Съб.</th>
+                <th class="weekDays" id="Sun">Нед.</th>
               </tr>
             </table>  
             `;
@@ -308,13 +308,13 @@ function genCalTopRow(LANGUAGE) {
               </tr>  
           
             <tr id="weekDaysRow">
-                <th class="weekDays id="Mon">MON.</th>
-                <th class="weekDays id="Tue">TUE.</th>
-                <th class="weekDays id="Wed">WED.</th>
-                <th class="weekDays id="Thu">THU.</th>
-                <th class="weekDays id="Fri">FRI.</th>
-                <th class="weekDays id="Sat">SAT.</th>
-                <th class="weekDays id="Sun">SUN.</th>
+                <th class="weekDays" id="Mon">MON.</th>
+                <th class="weekDays" id="Tue">TUE.</th>
+                <th class="weekDays" id="Wed">WED.</th>
+                <th class="weekDays" id="Thu">THU.</th>
+                <th class="weekDays" id="Fri">FRI.</th>
+                <th class="weekDays" id="Sat">SAT.</th>
+                <th class="weekDays" id="Sun">SUN.</th>
             </tr>
           </table>  
                 `;
