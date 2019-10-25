@@ -3,17 +3,21 @@ var that = this;
 that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
 that.year = new Date().getFullYear();
-let calendarTopRow = genCalTopRow(LANGUAGE);
-simpleCalendarContainer.innerHTML += calendarTopRow;
 that.simpleCalendarTable = document.getElementById("simpleCalendar");
 that.todayDate = new Date().getDate();
 that.listOfYearsContainer = document.getElementById('listOfYears');
 that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
 that.monthBgNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
 that.monthEnNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+that.currentMonthDays = new Date(that.year, that.monthGlobal + 1, 0).getDate();
+that.selectedDay = 0;
 let dayName = getDayName(that.firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
+
+let calendarTopRow = genCalTopRow(LANGUAGE);
+simpleCalendarContainer.innerHTML += calendarTopRow;
 that.dateNum = genCalSecondRow();
+genTableBody();
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme() {
@@ -203,6 +207,8 @@ function prevYear() {
 function genCalTopRow(LANGUAGE) {
     let monthName = getCurrentMonthName(LANGUAGE);
 
+    console.log(that.todayDate);
+
     switch (LANGUAGE) {
         case "bg":
             return `<table id="simpleCalendar">
@@ -210,6 +216,7 @@ function genCalTopRow(LANGUAGE) {
                 <th colspan="7">
                     <button  arrow" onclick="prevMonth(LANGUAGE);">&lt;</button>
                         <div class="monthName">
+                            <a href="#" onclick="showDates();">${that.todayDate}</a> 
                             <a href="#" onclick="showMonths();">${monthName}</a> 
                             <a href="#" onclick="showYears();">${that.year}</a>
                         </div>
@@ -585,7 +592,12 @@ function genTableBody() {
         if (that.dateNum == that.todayDate) {
             let todayCell = tr.insertCell();
             todayCell.innerHTML = `${that.dateNum}`;
-            todayCell.setAttribute(`class`, `highlight`);
+            // classList.contains(class);
+            // console.log(todayCell.classList.contains('disabled'));
+            if (!pastTheMont) {
+                todayCell.setAttribute(`class`, `highlight`);
+            }
+
             todayCell.onclick = e => showDate(e);
         } else {
             let todayCell = tr.insertCell();
@@ -594,7 +606,7 @@ function genTableBody() {
             if (pastTheMont) {
                 // let disabledDatesCell = tr.insertCell();
                 todayCell.innerHTML = `${that.dateNum}`;
-                todayCell.setAttribute(`class`, `day${that.dateNum} ${that.seasonTheme}Disabled disabled`);
+                todayCell.setAttribute(`class`, `day${that.dateNum} disabled`);
                 todayCell.onclick = e => showDisabledDateNext(e);
             } else {
                 todayCell.onclick = e => showDate(e);
@@ -796,6 +808,69 @@ function appendMonths(table) {
     }
 }
 
+
+function changeDate(e) {
+    that.todayDate = parseInt(e.target.innerHTML);
+    that.selectedDay = that.todayDate;
+
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
+    that.dateNum = genCalSecondRow(that.monthGlobal);
+    genTableBody();
+}
+
+
+
+function appendDates(table) {
+    const MAX_MONTH_DAYS = 31;
+
+    table.innerHTML = '';
+    // let table = document.getElementById("simpleCalendar");
+    let tr = '';
+    let td = '';
+
+
+    for (let m = 1; m <= MAX_MONTH_DAYS; m++) {
+        if (m == 1) {
+            tr = table.insertRow();
+            switch (LANGUAGE) {
+                case 'bg':
+                    tr.innerHTML = `<td class="closeBtn" colspan="5">
+                        <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
+                    </td>`;
+                    break;
+                case 'en':
+                    tr.innerHTML = `<td class="closeBtn" colspan="5">
+                        <a href="#" onclick="closeMe();">CLOSE</a>
+                    </td>`;
+                    break;
+
+            }
+        }
+
+        if ((m - 1) % 5 == 0) {
+            tr = table.insertRow();
+        }
+        td = tr.insertCell();
+
+        td.innerHTML = `${m}`;
+
+        td.onclick = (e) => changeDate(e);
+        if (m == that.todayDate) {
+            td.setAttribute('class', 'highlight');
+        }
+
+
+
+    }
+
+
+
+}
+
 function closeMe() {
     // window.location.reload();
 
@@ -873,4 +948,21 @@ function showYears() {
     appendYears(table);
 }
 
-genTableBody();
+
+function showDates() {
+    let table = document.getElementById("simpleCalendar");
+    let secondRow = document.getElementById('secondRow');
+    let tableBodyRows = document.getElementsByClassName('tableBodyCell');
+    let weekDaysRow = document.getElementById('weekDaysRow');
+
+    if (secondRow) {
+        secondRow.parentNode.removeChild(secondRow);
+    }
+
+    if (weekDaysRow) {
+        weekDaysRow.parentNode.removeChild(weekDaysRow);
+    }
+
+    removeTableRows(0, table.rows.length, table);
+    appendDates(table);
+}

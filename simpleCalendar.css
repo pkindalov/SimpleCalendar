@@ -102,7 +102,7 @@ td:nth-child(1) {
     border-left: 1px solid #c7c5c5;
 }
 
-td:hover {
+td:hover, .selectedDay {
     cursor: pointer;
     color: darkgrey;
     background-color: #ebe9e9;
