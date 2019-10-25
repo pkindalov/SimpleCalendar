@@ -1,11 +1,8 @@
 const LANGUAGE = "bg";
 var that = this;
 that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
-// that.simpleCalendarContainer.onkeypress = moveBack(event);
 that.monthGlobal = new Date().getMonth();
 that.year = new Date().getFullYear();
-// that.prevNextButtonsYear = that.year;
-// that.seasonTheme = getSeasonTheme(that.monthGlobal + 1);
 let calendarTopRow = genCalTopRow(LANGUAGE);
 simpleCalendarContainer.innerHTML += calendarTopRow;
 that.simpleCalendarTable = document.getElementById("simpleCalendar");
@@ -16,14 +13,13 @@ that.monthBgNames = ['Януари', 'Февруари', 'Март', 'Април
 that.monthEnNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 let dayName = getDayName(that.firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
-let dateNum = genCalSecondRow();
+that.dateNum = genCalSecondRow();
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme() {
     let theme = "january";
     let month = that.monthGlobal == -1 ? 11 : that.monthGlobal;
-    // that.monthGlobal = that.monthGlobal > 12 ? 0 : that.monthGlobal;
-    // alert(that.monthGlobal);
+
     switch (month + 1) {
         case 1:
             theme = "january";
@@ -84,16 +80,9 @@ function prevMonth() {
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
-    let dateNum = genCalSecondRow(that.monthGlobal);
+    that.dateNum = genCalSecondRow(that.monthGlobal);
 
-    // console.log("Prev: " + that.monthGlobal);
-    genTableBody(dateNum);
-    // let yearsOptions = document.getElementById("listOfYears");
-    // yearsOptions.children[0].value = that.year;
-    // yearsOptions.children[0].innerText = that.year;
-    // genYearsOptions(that.year);
-    // console.log(that.prevNextButtonsYear);
-    // alert(dateNum);
+    genTableBody();
 }
 
 function nextMonth() {
@@ -103,7 +92,6 @@ function nextMonth() {
     // that.seasonTheme = getSeasonTheme();
     if (that.monthGlobal > 11) {
         that.monthGlobal = 0;
-        // that.year = parseInt(new Date().getFullYear()) - 1;
         that.year++;
     }
     that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
@@ -111,26 +99,9 @@ function nextMonth() {
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
-    let dateNum = genCalSecondRow(that.monthGlobal);
+    that.dateNum = genCalSecondRow(that.monthGlobal);
 
-    // console.log("Next: " + that.monthGlobal);
-    genTableBody(dateNum);
-    // let yearsOptions = document.getElementById("listOfYears");
-    // yearsOptions.children[0].value = that.year;
-    // yearsOptions.children[0].innerText = that.year;
-    // genYearsOptions(that.year);
-
-    // var that = this;
-    // that.monthGlobal = that.monthGlobal + 1;
-    // let seasonTheme = getSeasonTheme();
-    // let topRow = genCalTopRow(seasonTheme, LANGUAGE);
-    // let simpleCalendarContainer = document.getElementById("simpleCalendarsimpleCalendarContainer");
-    // simpleCalendarContainer.innerHTML = "";
-    // simpleCalendarContainer.innerHTML += topRow;
-    // let table = document.getElementById("simpleCalendar");
-    // let dateNum = genCalSecondRow(table, that.monthGlobal);
-
-    // genTableBody(dateNum, table, todayDate, seasonTheme);
+    genTableBody();
 
 }
 
@@ -150,10 +121,10 @@ function nextYear() {
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
-    let dateNum = genCalSecondRow(that.monthGlobal);
+    that.dateNum = genCalSecondRow(that.monthGlobal);
 
     // console.log("Next: " + that.monthGlobal);
-    genTableBody(dateNum);
+    genTableBody();
     // let yearsOptions = document.getElementById("listOfYears");
     // yearsOptions.children[0].value = that.year;
     // yearsOptions.children[0].innerText = that.year;
@@ -202,10 +173,10 @@ function prevYear() {
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
-    let dateNum = genCalSecondRow(that.monthGlobal);
+    that.dateNum = genCalSecondRow(that.monthGlobal);
 
     // console.log("Next: " + that.monthGlobal);
-    genTableBody(dateNum);
+    genTableBody();
     // let yearsOptions = document.getElementById("listOfYears");
     // yearsOptions.children[0].value = that.year;
     // yearsOptions.children[0].innerText = that.year;
@@ -226,42 +197,6 @@ function prevYear() {
 
 // }
 
-function chooseYear() {
-    // let select = document.createElement('select');
-    // select.setAttribute('id', "listOfYears");
-
-    // genYearsOptions(that.year);
-
-    // let selYear = document.getElementById("listOfYears").value;
-    // document.getElementById("listOfYears").onchange = function (e) {
-    //     selYear = parseInt(this.value);
-
-    //     //TO DRAW UPDATED MONTH HERE
-    //     // that.seasonTheme = getSeasonTheme();
-
-    //     that.firstDayOfMonth = new Date(selYear, that.monthGlobal).toString();
-    //     that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    //     let topRow = genCalTopRow(LANGUAGE);
-    //     that.simpleCalendarContainer.innerHTML = "";
-    //     that.simpleCalendarContainer.innerHTML += topRow;
-    //     let dateNum = genCalSecondRow(that.monthGlobal);
-
-    //     // console.log("Next: " + that.monthGlobal);
-    //     genTableBody(dateNum);
-
-    //     let yearsOptions = document.getElementById("listOfYears");
-    //     yearsOptions.children[0].value = selYear;
-    //     yearsOptions.children[0].innerText = selYear;
-    //     that.prevNextButtonsYear = selYear;
-    // }
-
-    // console.log(that.prevNextButtonsYear);
-    // that.simpleCalendarContainer.appendChild(select);
-}
-
-function moveBack(event) {
-    console.log(event);
-}
 
 //functions about generating calendar
 //Following function generate first row of the table with the name of the days
@@ -499,7 +434,7 @@ function calcEmptyCols(dayName) {
     return emptyCols;
 }
 
-function genTableBody(dateNum) {
+function genTableBody() {
     let currentDate = new Date(that.year, that.monthGlobal + 1, 0) + " ";
     let countDays = parseInt(currentDate.split(" ")[2]);
     let currentMonthDays = countDays;
@@ -627,10 +562,10 @@ function genTableBody(dateNum) {
             tr = that.simpleCalendarTable.insertRow();
             tr.setAttribute('class', 'tableBodyCell');
         }
-        if (dateNum > currentMonthDays || dateNum > 31) {
-            dateNum = 1;
+        if (that.dateNum > currentMonthDays || that.dateNum > 31) {
+            that.dateNum = 1;
             pastTheMont = true;
-            startDayIndex = i + 7;
+            // startDayIndex = i + 7;
         }
 
         // td = tr.insertCell();
@@ -647,23 +582,23 @@ function genTableBody(dateNum) {
         // } else {
         // }
 
-        if (dateNum == that.todayDate) {
+        if (that.dateNum == that.todayDate) {
             let todayCell = tr.insertCell();
-            todayCell.innerHTML = `${dateNum}`;
+            todayCell.innerHTML = `${that.dateNum}`;
             todayCell.setAttribute(`class`, `highlight`);
             todayCell.onclick = e => showDate(e);
         } else {
             let todayCell = tr.insertCell();
-            todayCell.innerHTML = `${dateNum}`;
+            todayCell.innerHTML = `${that.dateNum}`;
 
             if (pastTheMont) {
                 // let disabledDatesCell = tr.insertCell();
-                todayCell.innerHTML = `${dateNum}`;
-                todayCell.setAttribute(`class`, `day${dateNum} ${that.seasonTheme}Disabled disabled`);
+                todayCell.innerHTML = `${that.dateNum}`;
+                todayCell.setAttribute(`class`, `day${that.dateNum} ${that.seasonTheme}Disabled disabled`);
                 todayCell.onclick = e => showDisabledDateNext(e);
             } else {
                 todayCell.onclick = e => showDate(e);
-                todayCell.setAttribute(`class`, `day${dateNum}`);
+                todayCell.setAttribute(`class`, `day${that.dateNum}`);
 
                 // if (i == startDayIndex || i == (startDayIndex + 1)) {
                 //     todayCell.setAttribute('class', `day${dateNum} saturdaySunday`);
@@ -678,7 +613,7 @@ function genTableBody(dateNum) {
             }
         }
 
-        dateNum++;
+        that.dateNum++;
     }
 
 }
@@ -740,11 +675,11 @@ function changeMonth(e) {
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
-    let dateNum = genCalSecondRow(that.monthGlobal);
+    that.dateNum = genCalSecondRow(that.monthGlobal);
 
     // console.log("Prev: " + that.monthGlobal);
     // genTableBody(dateNum);
-    genTableBody(dateNum);
+    genTableBody();
 }
 
 function changeYear(e) {
@@ -755,10 +690,10 @@ function changeYear(e) {
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
-    let dateNum = genCalSecondRow(that.monthGlobal);
+    that.dateNum = genCalSecondRow(that.monthGlobal);
 
     // console.log("Prev: " + that.monthGlobal);
-    genTableBody(dateNum);
+    genTableBody();
 }
 
 function appendYears(table) {
@@ -868,10 +803,10 @@ function closeMe() {
     let topRow = genCalTopRow(LANGUAGE);
     that.simpleCalendarContainer.innerHTML = "";
     that.simpleCalendarContainer.innerHTML += topRow;
-    let dateNum = genCalSecondRow(that.monthGlobal);
+    that.dateNum = genCalSecondRow(that.monthGlobal);
 
     // console.log("Prev: " + that.monthGlobal);
-    genTableBody(dateNum);
+    genTableBody();
 }
 
 
@@ -938,4 +873,4 @@ function showYears() {
     appendYears(table);
 }
 
-genTableBody(dateNum);
+genTableBody();
