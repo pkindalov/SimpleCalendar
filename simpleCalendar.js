@@ -623,8 +623,8 @@ function genTableBody(dateNum) {
     //         break;
     // }
     let rows = countDays - (7 - emptyCols);
-    let startDayIndex = 5;
-    let pairCount = 0;
+    // let startDayIndex = 5;
+    // let pairCount = 0;
 
     for (let i = 0; i < rows; i++) {
         if (i % 7 == 0) {
@@ -669,15 +669,15 @@ function genTableBody(dateNum) {
                 todayCell.onclick = e => showDate(e);
                 todayCell.setAttribute(`class`, `day${dateNum}`);
 
-                if (i == startDayIndex || i == (startDayIndex + 1)) {
-                    todayCell.setAttribute('class', `day${dateNum} saturdaySunday`);
-                    pairCount++;
-                    if (pairCount == 2) {
-                        pairCount = 0;
-                        startDayIndex += 7;
+                // if (i == startDayIndex || i == (startDayIndex + 1)) {
+                //     todayCell.setAttribute('class', `day${dateNum} saturdaySunday`);
+                //     pairCount++;
+                //     if (pairCount == 2) {
+                //         pairCount = 0;
+                //         startDayIndex += 7;
 
-                    }
-                }
+                //     }
+                // }
 
             }
         }
