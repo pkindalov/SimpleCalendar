@@ -13,6 +13,7 @@ that.todayDate = new Date().getDate();
 that.listOfYearsContainer = document.getElementById('listOfYears');
 that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
 that.monthBgNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
+that.monthEnNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 let dayName = getDayName(that.firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
 let dateNum = genCalSecondRow();
@@ -269,15 +270,15 @@ function genCalTopRow(LANGUAGE) {
 
     switch (LANGUAGE) {
         case "bg":
-            return `<table class=${that.seasonTheme} id="simpleCalendar">
+            return `<table id="simpleCalendar">
               <tr>
                 <th colspan="7">
-                    <button class="${that.seasonTheme} arrow" onclick="prevMonth(LANGUAGE);">&lt;</button>
+                    <button  arrow" onclick="prevMonth(LANGUAGE);">&lt;</button>
                         <div class="monthName">
                             <a href="#" onclick="showMonths();">${monthName}</a> 
                             <a href="#" onclick="showYears();">${that.year}</a>
                         </div>
-                    <button class="${that.seasonTheme} arrow" onclick="nextMonth(LANGUAGE);">&gt;</button>
+                    <button arrow" onclick="nextMonth(LANGUAGE);">&gt;</button>
                 </th>
                 </tr>  
             
@@ -294,31 +295,28 @@ function genCalTopRow(LANGUAGE) {
             `;
             break;
         case "en":
-            return `<table class=${that.seasonTheme} id="simpleCalendar">
-                        <tr>
-                            <th colspan="7">
-                            <button class="${that.seasonTheme}" onclick="prevMonth(LANGUAGE);" style="color: orange">&lt;</button><div class="monthName">${monthName}</div>
-                            <button class="${that.seasonTheme}" onclick="nextMonth(LANGUAGE);" style="color: orange">&gt;</button></th>
-                        </tr>  
-                        <tr>
-                            <th colspan="7">
-                                <button class="${that.seasonTheme}" id="prevYear"  onclick="prevYear()">&lt;</button>
-                                <select id="listOfYears" onclick="chooseYear()">
-                                <option value="${that.year}">${that.prevNextButtonsYear}</option>
-                                </select>
-                                <button class="${that.seasonTheme}" id="nextYear"   onclick="nextYear()">&gt;</button>
-                            </th> 
-                        </tr> 
-                        <tr>
-                            <th id="Mon">Mon.</th>
-                            <th id="Tue">Tue.</th>
-                            <th id="Wed">Wed.</th>
-                            <th id="Thu">Thu.</th>
-                            <th id="Fri">Fri.</th>
-                            <th id="Sat">Sat.</th>
-                            <th id="Sun">Sun.</th>
-                        </tr>
-                     </table>  
+            return `<table id="simpleCalendar">
+            <tr>
+              <th colspan="7">
+                  <button  arrow" onclick="prevMonth(LANGUAGE);">&lt;</button>
+                      <div class="monthName">
+                          <a href="#" onclick="showMonths();">${monthName}</a> 
+                          <a href="#" onclick="showYears();">${that.year}</a>
+                      </div>
+                  <button arrow" onclick="nextMonth(LANGUAGE);">&gt;</button>
+              </th>
+              </tr>  
+          
+            <tr id="weekDaysRow">
+                <th class="weekDays id="Mon">MON.</th>
+                <th class="weekDays id="Tue">TUE.</th>
+                <th class="weekDays id="Wed">WED.</th>
+                <th class="weekDays id="Thu">THU.</th>
+                <th class="weekDays id="Fri">FRI.</th>
+                <th class="weekDays id="Sat">SAT.</th>
+                <th class="weekDays id="Sun">SUN.</th>
+            </tr>
+          </table>  
                 `;
             break;
     }
@@ -403,11 +401,9 @@ function getCurrentMonthName(LANGUAGE) {
                 monthName = "September";
                 break;
             case "Oct":
-                genSec
-                monthNagenSec
+                monthName = "October";
                 break;
             case "Nov":
-                genSec
                 monthName = "November";
                 break;
             case "Dec":
@@ -723,7 +719,16 @@ function removeTableRows(rowIndex, length, table) {
 
 function changeMonth(e) {
     // alert(e.target.innerHTML);
-    let index = that.monthBgNames.indexOf(e.target.innerHTML);
+    let index = '';
+    switch (LANGUAGE) {
+        case 'bg':
+            index = that.monthBgNames.indexOf(e.target.innerHTML);
+            break;
+        case 'en':
+            index = that.monthEnNames.indexOf(e.target.innerHTML);
+            break;
+
+    }
     if (index < 0) {
         alert('Няма такъв месец');
     }
@@ -766,9 +771,20 @@ function appendYears(table) {
     for (let m = 0; m < 20; m++) {
         if (m == 0) {
             tr = table.insertRow();
-            tr.innerHTML = `<td class="closeBtn" colspan="5">
-                <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
-            </td>`;
+
+            switch (LANGUAGE) {
+                case 'bg':
+                    tr.innerHTML = `<td class="closeBtn" colspan="5">
+                        <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
+                    </td>`;
+                    break;
+                case 'en':
+                    tr.innerHTML = `<td class="closeBtn" colspan="5">
+                        <a href="#" onclick="closeMe();">CLOSE</a>
+                    </td>`;
+                    break;
+
+            }
         }
 
 
@@ -807,9 +823,19 @@ function appendMonths(table) {
     for (let m = 0; m < that.monthBgNames.length; m++) {
         if (m == 0) {
             tr = table.insertRow();
-            tr.innerHTML = `<td class="closeBtn" colspan="3">
-                <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
-            </td>`;
+            switch (LANGUAGE) {
+                case 'bg':
+                    tr.innerHTML = `<td class="closeBtn" colspan="5">
+                        <a href="#" onclick="closeMe();">ЗАТВОРИ</a>
+                    </td>`;
+                    break;
+                case 'en':
+                    tr.innerHTML = `<td class="closeBtn" colspan="5">
+                        <a href="#" onclick="closeMe();">CLOSE</a>
+                    </td>`;
+                    break;
+
+            }
         }
 
         if (m % 3 == 0) {
@@ -817,7 +843,16 @@ function appendMonths(table) {
         }
 
         td = tr.insertCell();
-        td.innerHTML = `${that.monthBgNames[m]}`;
+
+        switch (LANGUAGE) {
+            case 'bg':
+                td.innerHTML = `${that.monthBgNames[m]}`;
+                break;
+            case 'en':
+                td.innerHTML = `${that.monthEnNames[m]}`;
+                break;
+
+        }
         td.onclick = (e) => changeMonth(e);
         if (m == that.monthGlobal) {
             td.setAttribute('class', 'highlight');
