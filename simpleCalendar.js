@@ -594,8 +594,11 @@ function genTableBody() {
             todayCell.innerHTML = `${that.dateNum}`;
             // classList.contains(class);
             // console.log(todayCell.classList.contains('disabled'));
+
             if (!pastTheMont) {
                 todayCell.setAttribute(`class`, `highlight`);
+            } else {
+                todayCell.setAttribute(`class`, `disabled`);
             }
 
             todayCell.onclick = e => showDate(e);
