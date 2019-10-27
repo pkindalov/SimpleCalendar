@@ -711,12 +711,32 @@ function changeYear(e) {
     genTableBody();
 }
 
+
+function showMorePrevDates() {
+    let startElementValue = parseInt(document.getElementById('cell0').innerText);
+    startElementValue--;
+    for (let d = 0; d < 20; d++) {
+        document.getElementById(`cell${d}`).innerText = startElementValue;
+        startElementValue--;
+    }
+}
+
+function showMoreNextDates() {
+    let startElementValue = parseInt(document.getElementById('cell20').innerText);
+    startElementValue++;
+    for (let d = 20; d < 40; d++) {
+        document.getElementById(`cell${d}`).innerText = startElementValue;
+        startElementValue++;
+    }
+}
+
 function appendYears(table) {
     table.innerHTML = '';
 
     let tr = '';
     let td = '';
     let yearsBack = that.year - 20;
+    let bottomTdsId = 20;
 
     for (let m = 0; m < 20; m++) {
         if (m == 0) {
@@ -738,12 +758,15 @@ function appendYears(table) {
         }
 
 
+
+
         if (m % 5 == 0) {
             tr = table.insertRow();
         }
 
         td = tr.insertCell();
         td.innerHTML = `${yearsBack++}`;
+        td.setAttribute('id', `cell${m}`);
         td.onclick = (e) => changeYear(e);
     }
 
@@ -752,17 +775,36 @@ function appendYears(table) {
             tr = table.insertRow();
         }
 
-        td = tr.insertCell();
-        if (yearsBack == that.year) {
-            td.setAttribute('class', 'highlight');
+        if (m == 20) {
+            tr.innerHTML = `<td class="closeBtn" colspan="5">
+                                <a href="#" onclick="showMorePrevDates();">&lt;</a>
+                                <a href="#" onclick="showMoreNextDates();">&gt;</a>
+                             </td>`;
         }
-        console.log(yearsBack);
-        td.innerHTML = `${yearsBack++}`;
-        td.onclick = (e) => changeYear(e);
+
+        if (m < 20) {
+
+            td = tr.insertCell();
+            if (yearsBack == that.year) {
+                td.setAttribute('class', 'highlight');
+                td.setAttribute('id', `cell${bottomTdsId}`);
+            }
+            // console.log(yearsBack);
+            td.innerHTML = `${yearsBack++}`;
+            td.setAttribute('id', `cell${bottomTdsId}`);
+            td.onclick = (e) => changeYear(e);
+        }
+
+        bottomTdsId++;
+
     }
 
 
 }
+
+
+
+
 
 function appendMonths(table) {
     table.innerHTML = '';
@@ -853,7 +895,6 @@ function appendDates(table) {
 
             }
         }
-
         if ((m - 1) % 5 == 0) {
             tr = table.insertRow();
         }
