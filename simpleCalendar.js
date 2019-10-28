@@ -1,4 +1,4 @@
-const LANGUAGE = "bg";
+const LANGUAGE = "en";
 var that = this;
 that.simpleCalendarContainer = document.getElementById("simpleCalendarContainer");
 that.monthGlobal = new Date().getMonth();
@@ -242,6 +242,7 @@ function genCalTopRow(LANGUAGE) {
               <th colspan="7">
                   <button  arrow" onclick="prevMonth(LANGUAGE);">&lt;</button>
                       <div class="monthName">
+                          <a href="#" onclick="showDates();">${that.todayDate}</a> 
                           <a href="#" onclick="showMonths();">${monthName}</a> 
                           <a href="#" onclick="showYears();">${that.year}</a>
                       </div>
@@ -454,7 +455,7 @@ function genTableBody() {
     let td = "";
     let pastTheMont = false;
 
-    //Show 2 weeks after the last day of the current month.     
+    // Show 2 weeks after the last day of the current month.
     if (lastDayOfMonthName == "Mon" && countDays == 31) {
         countDays += 13;
     } else if (lastDayOfMonthName == "Mon" && countDays == 30) {
@@ -462,7 +463,7 @@ function genTableBody() {
     } else if (lastDayOfMonthName == "Tue" && countDays == 30) {
         countDays += 12;
     } else if (lastDayOfMonthName == "Tue" && countDays == 31) {
-        countDays += 12;
+        countDays += 5;
     } else if (lastDayOfMonthName == "Wed" && countDays == 30) {
         countDays += 11;
     } else if (lastDayOfMonthName == "Wed" && countDays == 31) {
@@ -480,9 +481,9 @@ function genTableBody() {
     } else if (lastDayOfMonthName == "Sat" && countDays == 31) {
         countDays += 8;
     } else if (lastDayOfMonthName == "Sun" && countDays == 30) {
-        countDays += 7;
+        countDays += 14;
     } else if (lastDayOfMonthName == "Sun" && countDays == 31) {
-        countDays += 7;
+        countDays += 14;
     }
 
 
@@ -519,33 +520,33 @@ function genTableBody() {
     //separate check for february
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ДА ГИ ПРОВЕРЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!g
     if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 28) {
-        countDays += 7;
+        countDays += 13;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Mon" && countDays == 29) {
-        countDays += 6;
+        countDays += 13;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 28) {
-        countDays += 7;
+        countDays += 12;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Tue" && countDays == 29) {
-        countDays += 6;
+        countDays += 12;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 28) {
-        countDays += 7;
+        countDays += 11;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Wed" && countDays == 29) {
-        countDays += 6;
+        countDays += 11;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 28) {
-        countDays += 7;
+        countDays += 10;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Thu" && countDays == 29) {
-        countDays += 6;
+        countDays += 10;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 28) {
-        countDays += 7;
+        countDays += 9;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Fri" && countDays == 29) {
-        countDays += 6;
+        countDays += 9;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 28) {
-        countDays += 7;
+        countDays += 8;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sat" && countDays == 29) {
         countDays += 8;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 28) {
-        countDays += 7;
+        countDays += 14;
     } else if (that.monthGlobal == 1 && lastDayOfMonthName == "Sun" && countDays == 29) {
-        countDays += 13;
+        countDays += 14;
     }
 
     // alert(countDays);
@@ -561,13 +562,17 @@ function genTableBody() {
     //         break;
     // }
     let rows = countDays - (7 - emptyCols);
+    let rowsCounter = 5;
     // let startDayIndex = 5;
     // let pairCount = 0;
+    console.log(rows);
 
     for (let i = 0; i < rows; i++) {
+        if (rowsCounter < 0) break;
         if (i % 7 == 0) {
             tr = that.simpleCalendarTable.insertRow();
             tr.setAttribute('class', 'tableBodyCell');
+            rowsCounter--;
         }
         if (that.dateNum > currentMonthDays || that.dateNum > 31) {
             that.dateNum = 1;
@@ -629,6 +634,8 @@ function genTableBody() {
         }
 
         that.dateNum++;
+
+
     }
 
 }
