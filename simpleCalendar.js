@@ -562,7 +562,7 @@ function genTableBody() {
     //         break;
     // }
     let rows = countDays - (7 - emptyCols);
-    let rowsCounter = 5;
+    let rowsCounter = 6;
     // let startDayIndex = 5;
     // let pairCount = 0;
     console.log(rows);
@@ -570,9 +570,13 @@ function genTableBody() {
     for (let i = 0; i < rows; i++) {
         if (rowsCounter < 0) break;
         if (i % 7 == 0) {
-            tr = that.simpleCalendarTable.insertRow();
-            tr.setAttribute('class', 'tableBodyCell');
             rowsCounter--;
+            if (rowsCounter != 0) {
+                tr = that.simpleCalendarTable.insertRow();
+                tr.setAttribute('class', 'tableBodyCell');
+            } else {
+                break;
+            }
         }
         if (that.dateNum > currentMonthDays || that.dateNum > 31) {
             that.dateNum = 1;
