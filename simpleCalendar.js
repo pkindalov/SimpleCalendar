@@ -152,17 +152,12 @@ function prevYear() {
 // }
 
 function arrowsMove(e) {
-    console.log(e.keyCode);
-    //40 bottom
-    //38 up
-    //37 left
-    //39 right
-    // console.log(e);
     switch (e.keyCode) {
         case 39:
             nextMonth();
             break;
         case 38:
+            showMonths();
             break;
         case 37:
             prevMonth();
@@ -171,8 +166,12 @@ function arrowsMove(e) {
             break;
         case 68:
             showDates();
-            document.getElementById("simpleCalendar").addEventListener("keydown", arrowsMove);
-            document.getElementById("simpleCalendar").focus();
+            break;
+        case 77:
+            showMonths();
+            break;
+        case 89:
+            showYears();
             break;
     }
 }
@@ -520,6 +519,9 @@ function genTableBody() {
         }
         that.dateNum++;
     }
+
+    document.getElementById("simpleCalendar").addEventListener("keydown", arrowsMove);
+    document.getElementById("simpleCalendar").focus();
 }
 
 function showDate(e) {
@@ -815,5 +817,4 @@ function showDates() {
 
     removeTableRows(0, table.rows.length, table);
     appendDates(table);
-
 }
