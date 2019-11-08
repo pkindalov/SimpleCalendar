@@ -243,3 +243,8 @@ td.highlight, .highlight {
     background-color: #ef4f69;
     color: white;
 }
+
+.userSelected{
+    background-color:  yellowgreen;
+    color:  black;
+}
