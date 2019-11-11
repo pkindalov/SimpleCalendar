@@ -358,6 +358,7 @@ function genCalSecondRow() {
     let previousMontDays = parseInt(previousMont.split(" ")[2]);
     let prevMontStart = previousMontDays + 1 - that.emptyCols;
     let counter = 1;
+    let day = 0;
     that.simpleCalendarTable = document.getElementById("simpleCalendar");
     that.simpleCalendarTable = that.simpleCalendarTable.insertRow();
     that.simpleCalendarTable.setAttribute('id', 'secondRow');
@@ -371,9 +372,14 @@ function genCalSecondRow() {
             // } else {
             //     newTd.setAttribute("class", `${that.seasonTheme}Disabled disabled`);
             // }
-            newTd.setAttribute("class", `${that.seasonTheme}Disabled disabled`);
+            if (day == 5 || day == 6) {
+                newTd.setAttribute("class", `saturdaySunday`);
+            } else {
+                newTd.setAttribute("class", `disabled`);
+            }
             newTd.onclick = e => showDisabledDatePrev(e);
             prevMontStart++;
+            day++;
         } else {
             if (that.todayDate == startDate) {
                 let anotherTd = that.simpleCalendarTable.insertCell();
@@ -385,7 +391,7 @@ function genCalSecondRow() {
                     let userSelectedTd = that.simpleCalendarTable.insertCell();
                     userSelectedTd.innerHTML = `${startDate}`;
                     userSelectedTd.setAttribute("class", `userSelected`);
-                    userSelectedTd.setAttribute("style", "background: yellowgreen; color: black;");
+                    // userSelectedTd.setAttribute("style", "background: yellowgreen; color: black;");
                     userSelectedTd.onclick = e => showDate(e);
                 } else {
                     let thirdCell = that.simpleCalendarTable.insertCell();
@@ -518,11 +524,13 @@ function genTableBody() {
 
     let rows = countDays - (7 - emptyCols);
     let rowsCounter = 6;
+    let day = 0;
 
     for (let i = 0; i < rows; i++) {
         if (rowsCounter < 0) break;
         if (i % 7 == 0) {
             rowsCounter--;
+            day = 0;
             if (rowsCounter != 0) {
                 tr = that.simpleCalendarTable.insertRow();
                 tr.setAttribute('class', 'tableBodyCell');
@@ -542,7 +550,12 @@ function genTableBody() {
             if (!pastTheMont) {
                 todayCell.setAttribute(`class`, `highlight`);
             } else {
-                todayCell.setAttribute(`class`, `disabled`);
+                if (day == 5 || day == 6) {
+                    todayCell.setAttribute(`class`, `day${that.dateNum} saturdaySunday`);
+                } else {
+                    todayCell.setAttribute(`class`, `disabled`);
+                }
+
             }
 
             todayCell.onclick = e => showDate(e);
@@ -561,17 +574,32 @@ function genTableBody() {
 
             if (pastTheMont) {
                 todayCell.innerHTML = `${that.dateNum}`;
-                todayCell.setAttribute(`class`, `day${that.dateNum} disabled`);
+                if (day == 5 || day == 6) {
+                    todayCell.setAttribute(`class`, `day${that.dateNum} saturdaySunday`);
+                } else {
+                    todayCell.setAttribute(`class`, `day${that.dateNum} disabled`);
+
+                }
                 todayCell.onclick = e => showDisabledDateNext(e);
             } else if (that.userSelectedDay == (that.dateNum - 1) + counter) {
-                todayCell.setAttribute("style", "background: yellowgreen; color: black;");
+                todayCell.setAttribute("class", `userSelected`);
+                // todayCell.setAttribute("style", "background: yellowgreen; color: black;");
             }
             else {
                 todayCell.onclick = e => showDate(e);
-                todayCell.setAttribute(`class`, `day${that.dateNum}`);
+                if (day == 5 || day == 6) {
+                    todayCell.setAttribute(`class`, `day${that.dateNum} saturdaySunday`);
+
+                } else {
+                    todayCell.setAttribute(`class`, `day${that.dateNum}`);
+                }
             }
         }
+
+
+
         that.dateNum++;
+        day++;
     }
 
     attachKeyDownEvent();
