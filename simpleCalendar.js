@@ -617,14 +617,59 @@ function showDate(e) {
 }
 
 function showDisabledDateNext(e) {
+    that.monthGlobal++;
+    // console.log(that.monthGlobal);
+
+    if (that.monthGlobal > 11) {
+        that.monthGlobal = 0;
+        that.year++;
+    }
+
     let dateStr = that.year + '-' + (that.monthGlobal + 2) + '-' + e.target.innerHTML;
     let date = new Date(dateStr);
+
+    that.userSelectedDay = parseInt(e.target.innerHTML);
+    // that.todayDate = parseInt(e.target.innerHTML);
+
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
+    that.dateNum = genCalSecondRow(that.monthGlobal);
+    genTableBody();
+
+
 }
 
+//-------------------------------------------------------------------------------------------------------------------
 function showDisabledDatePrev(e) {
+    that.monthGlobal--;
+    // console.log(that.monthGlobal);
+
+    if (that.monthGlobal < 0) {
+        that.monthGlobal = 11;
+        that.year--;
+    }
+
     let dateStr = that.year + '-' + (that.monthGlobal) + '-' + e.target.innerHTML;
     let date = new Date(dateStr);
+    that.userSelectedDay = parseInt(e.target.innerHTML);
+    // that.todayDate = parseInt(e.target.innerHTML);
+
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
+    that.dateNum = genCalSecondRow(that.monthGlobal);
+    genTableBody();
+
+
+
 }
+
+//----------------------------------------------------------------------------------------------------------------------------
 
 //recursively remove table rows
 function removeTableRows(rowIndex, length, table) {
@@ -859,10 +904,10 @@ function appendDates(table) {
             td.setAttribute("colspan", "4");
             switch (that.LANGUAGE) {
                 case 'bg':
-                    td.innerHTML = `<a href="#" onclick="clearSelectedDate();">Изчисти</a>`;
+                    td.innerHTML = `<a href="#" onclick="clearSelectedDate();">Изчисти Избраната Дата</a>`;
                     break;
                 case 'en':
-                    td.innerHTML = `<a href="#" onclick="clearSelectedDate();">Clear Date</a>`;
+                    td.innerHTML = `<a href="#" onclick="clearSelectedDate();">Clear Selected Date</a>`;
                     break;
             }
         }
