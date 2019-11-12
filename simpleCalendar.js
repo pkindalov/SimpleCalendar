@@ -614,6 +614,16 @@ function attachKeyDownEvent() {
 function showDate(e) {
     let dateStr = that.year + '-' + (that.monthGlobal + 1) + '-' + e.target.innerHTML;
     let date = new Date(dateStr);
+
+
+    that.userSelectedDay = parseInt(e.target.innerHTML);
+    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
+    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
+    let topRow = genCalTopRow(LANGUAGE);
+    that.simpleCalendarContainer.innerHTML = "";
+    that.simpleCalendarContainer.innerHTML += topRow;
+    that.dateNum = genCalSecondRow(that.monthGlobal);
+    genTableBody();
 }
 
 function showDisabledDateNext(e) {
