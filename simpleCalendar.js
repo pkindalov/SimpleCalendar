@@ -12,7 +12,6 @@ that.monthEnNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
 that.currentMonthDays = new Date(that.year, that.monthGlobal + 1, 0).getDate();
 that.selectedDay = 0;
 that.userSelectedDay = 0;
-// that.userSelectedYear = that.year;
 let dayName = getDayName(that.firstDayOfMonth.split(" ")[0]);
 that.emptyCols = calcEmptyCols(dayName);
 
@@ -22,7 +21,6 @@ that.dateNum = genCalSecondRow();
 genTableBody();
 
 attachKeyDownEvent();
-// document.getElementById("simpleCalendar").addEventListener("keydown", arrowsMove);
 
 //give a class name of the calendar theme according to the current season
 function getSeasonTheme() {
@@ -92,14 +90,6 @@ function prevMonth() {
         that.year--;
     }
     drawCalendarBody();
-
-    // that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    // that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    // let topRow = genCalTopRow(LANGUAGE);
-    // that.simpleCalendarContainer.innerHTML = "";
-    // that.simpleCalendarContainer.innerHTML += topRow;
-    // that.dateNum = genCalSecondRow(that.monthGlobal);
-    // genTableBody();
 }
 
 function nextMonth() {
@@ -109,65 +99,8 @@ function nextMonth() {
         that.monthGlobal = 0;
         that.year++;
     }
-
     drawCalendarBody();
-    // that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
-    // that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    // let topRow = genCalTopRow(LANGUAGE);
-    // that.simpleCalendarContainer.innerHTML = "";
-    // that.simpleCalendarContainer.innerHTML += topRow;
-    // that.dateNum = genCalSecondRow(that.monthGlobal);
-    // genTableBody();
-    // document.getElementById("simpleCalendar").addEventListener("keydown", arrowsMove);
-    // document.getElementById("simpleCalendar").focus();
 }
-
-// function nextYear() {
-//     that.year++;
-//     if (that.monthGlobal > 11) {
-//         that.monthGlobal = 0;
-//         that.year++;
-//     }
-
-//    drawCalendarBody(); 
-//     that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
-//     that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-//     let topRow = genCalTopRow(LANGUAGE);
-//     that.simpleCalendarContainer.innerHTML = "";
-//     that.simpleCalendarContainer.innerHTML += topRow;
-//     that.dateNum = genCalSecondRow(that.monthGlobal);
-//     genTableBody();
-// }
-
-// function prevYear() {
-//     that.year--;
-//     if (that.monthGlobal > 11) {
-//         that.monthGlobal = 0;
-//         that.year++;
-//     }
-//    drawCalendarBody();
-//     that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
-//     that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-//     let topRow = genCalTopRow(LANGUAGE);
-//     that.simpleCalendarContainer.innerHTML = "";
-//     that.simpleCalendarContainer.innerHTML += topRow;
-//     that.dateNum = genCalSecondRow(that.monthGlobal);
-//     genTableBody();
-// }
-
-// function genYearsOptions(years) {
-//     let listOfYears = years;
-//     let option = '';
-//     for (let i = 0; i < 50; i++) {
-//         listOfYears--;
-//         option = document.createElement('option');
-//         option.text = listOfYears;
-//         option.value = listOfYears;
-//         that.listOfYearsContainer = document.getElementById('listOfYears');
-//         that.listOfYearsContainer.appendChild(option);
-//     }
-
-// }
 
 function arrowsMove(e) {
     switch (e.keyCode) {
@@ -181,13 +114,7 @@ function arrowsMove(e) {
             prevMonth();
             break;
         case 40:
-            that.firstDayOfMonth = new Date(that.year, that.monthGlobal).toString();
-            that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-            let topRow = genCalTopRow(LANGUAGE);
-            that.simpleCalendarContainer.innerHTML = "";
-            that.simpleCalendarContainer.innerHTML += topRow;
-            that.dateNum = genCalSecondRow(that.monthGlobal);
-            genTableBody();
+            drawCalendarBody();
             break;
         case 68:
             showDates();
@@ -200,8 +127,6 @@ function arrowsMove(e) {
             break;
     }
 }
-
-
 
 //functions about generating calendar
 //Following function generate first row of the table with the name of the days
@@ -367,11 +292,7 @@ function genCalSecondRow() {
         if (i < that.emptyCols) {
             let newTd = that.simpleCalendarTable.insertCell();
             newTd.innerHTML = `${prevMontStart}`;
-            // if (that.userSelectedDay == startDate + counter) {
-            //     newTd.setAttribute("class", `userSelected`);
-            // } else {
-            //     newTd.setAttribute("class", `${that.seasonTheme}Disabled disabled`);
-            // }
+
             if (day == 5 || day == 6) {
                 newTd.setAttribute("class", `saturdaySunday`);
             } else {
@@ -391,7 +312,6 @@ function genCalSecondRow() {
                     let userSelectedTd = that.simpleCalendarTable.insertCell();
                     userSelectedTd.innerHTML = `${startDate}`;
                     userSelectedTd.setAttribute("class", `userSelected`);
-                    // userSelectedTd.setAttribute("style", "background: yellowgreen; color: black;");
                     userSelectedTd.onclick = e => showDate(e);
                 } else {
                     let thirdCell = that.simpleCalendarTable.insertCell();
@@ -401,9 +321,7 @@ function genCalSecondRow() {
                     }
                     thirdCell.onclick = e => showDate(e);
                 }
-
             }
-
             startDate++;
         }
     }
@@ -455,7 +373,6 @@ function genTableBody() {
     let lastDayOfMonthName = currentDate.split(" ")[0];
     that.simpleCalendarTable = document.getElementById("simpleCalendar");
     let tr = "";
-    let td = "";
     let pastTheMont = false;
     let counter = 1;
 
@@ -595,15 +512,10 @@ function genTableBody() {
                 }
             }
         }
-
-
-
         that.dateNum++;
         day++;
     }
-
     attachKeyDownEvent();
-
 }
 
 function attachKeyDownEvent() {
@@ -612,71 +524,36 @@ function attachKeyDownEvent() {
 }
 
 function showDate(e) {
-    let dateStr = that.year + '-' + (that.monthGlobal + 1) + '-' + e.target.innerHTML;
-    let date = new Date(dateStr);
-
-
+    // let dateStr = that.year + '-' + (that.monthGlobal + 1) + '-' + e.target.innerHTML;
+    // let date = new Date(dateStr);
     that.userSelectedDay = parseInt(e.target.innerHTML);
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
+    that.userSelectedDayOn = !that.userSelectedDayOn;
+    drawCalendarBody();
 }
 
 function showDisabledDateNext(e) {
     that.monthGlobal++;
-    // console.log(that.monthGlobal);
-
     if (that.monthGlobal > 11) {
         that.monthGlobal = 0;
         that.year++;
     }
-
-    let dateStr = that.year + '-' + (that.monthGlobal + 2) + '-' + e.target.innerHTML;
-    let date = new Date(dateStr);
-
+    // let dateStr = that.year + '-' + (that.monthGlobal + 2) + '-' + e.target.innerHTML;
+    // let date = new Date(dateStr);
     that.userSelectedDay = parseInt(e.target.innerHTML);
-    // that.todayDate = parseInt(e.target.innerHTML);
-
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
-
-
+    drawCalendarBody();
 }
 
 //-------------------------------------------------------------------------------------------------------------------
 function showDisabledDatePrev(e) {
     that.monthGlobal--;
-    // console.log(that.monthGlobal);
-
     if (that.monthGlobal < 0) {
         that.monthGlobal = 11;
         that.year--;
     }
-
-    let dateStr = that.year + '-' + (that.monthGlobal) + '-' + e.target.innerHTML;
-    let date = new Date(dateStr);
+    // let dateStr = that.year + '-' + (that.monthGlobal) + '-' + e.target.innerHTML;
+    // let date = new Date(dateStr);
     that.userSelectedDay = parseInt(e.target.innerHTML);
-    // that.todayDate = parseInt(e.target.innerHTML);
-
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
-
-
-
+    drawCalendarBody();
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -706,25 +583,13 @@ function changeMonth(e) {
     }
 
     that.monthGlobal = index;
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
+    drawCalendarBody();
 }
 
 function changeYear(e) {
     that.year = parseInt(e.target.innerHTML);
     // that.userSelectedYear = parseInt(e.target.innerHTML);
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
+    drawCalendarBody();
 }
 
 function showMorePrevDates() {
@@ -864,13 +729,7 @@ function changeDate(e) {
     // that.todayDate = parseInt(e.target.innerHTML);
     // that.selectedDay = that.todayDate;
     that.userSelectedDay = parseInt(e.target.innerHTML);
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
+    drawCalendarBody();
 }
 
 function appendDates(table) {
@@ -925,34 +784,20 @@ function appendDates(table) {
     }
 }
 
-
 function clearSelectedDate() {
     that.userSelectedDay = 0;
-    that.firstDayOfMonth = new Date(that.year, that.monthGlobal, 1).toString();
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
+    drawCalendarBody();
 }
-
 
 function closeMe() {
-    that.emptyCols = calcEmptyCols(that.firstDayOfMonth.split(" ")[0]);
-    let topRow = genCalTopRow(LANGUAGE);
-    that.simpleCalendarContainer.innerHTML = "";
-    that.simpleCalendarContainer.innerHTML += topRow;
-    that.dateNum = genCalSecondRow(that.monthGlobal);
-    genTableBody();
+    drawCalendarBody();
 }
-
 
 function showMonths() {
     let table = document.getElementById("simpleCalendar");
     let weekDaysRow = document.getElementById('weekDaysRow');
     let secondRow = document.getElementById('secondRow');
-    let tableBodyRows = document.getElementsByClassName('tableBodyCell');
+
     if (secondRow) {
         secondRow.parentNode.removeChild(secondRow);
     }
@@ -966,7 +811,6 @@ function showMonths() {
 function showYears() {
     let table = document.getElementById("simpleCalendar");
     let secondRow = document.getElementById('secondRow');
-    let tableBodyRows = document.getElementsByClassName('tableBodyCell');
     let weekDaysRow = document.getElementById('weekDaysRow');
 
     if (secondRow) {
@@ -985,7 +829,6 @@ function showYears() {
 function showDates() {
     let table = document.getElementById("simpleCalendar");
     let secondRow = document.getElementById('secondRow');
-    let tableBodyRows = document.getElementsByClassName('tableBodyCell');
     let weekDaysRow = document.getElementById('weekDaysRow');
 
     if (secondRow) {
