@@ -1,9 +1,60 @@
 let container = document.getElementById("container");
 // container.innerHTML = "<h1>Works</h1>";
 
+
+//give a class name of the calendar theme according to the current season
+function getSeasonTheme(month) {
+    let theme = 'january';
+
+    switch (month) {
+        case 1:
+            theme = 'january';
+            break;
+        case 2:
+            theme = 'february';
+            break;
+        case 3:
+            theme = 'march';
+            break;
+        case 4:
+            theme = 'april';
+            break;
+        case 5:
+            theme = 'may';
+            break;
+        case 6:
+            theme = 'june';
+            break;
+        case 7:
+            theme = 'july';
+            break;
+        case 8:
+            theme = 'august';
+            break;
+        case 9:
+            theme = 'september';
+            break;
+        case 10:
+            theme = 'october';
+            break;
+        case 11:
+            theme = 'november';
+            break;
+        case 12:
+            theme = 'december';
+            break;
+        default:
+            theme = 'january';
+            break;
+    }
+
+    return theme;
+
+}
+
 //functions about generating calendar
-function genCalTopRow() {
-    return `<table id="calendar">
+function genCalTopRow(seasonTheme) {
+    return `<table class=${seasonTheme} id="calendar">
       <tr>
         <th>Пон.</th>
         <th>Вто.</th>
@@ -121,7 +172,7 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
         }
         // dynamicRow.insertCell(i);
         if (dateNum == todayDate) {
-            dynamicRow.innerHTML += `<td class="hightlight">${dateNum}</td>`;
+            dynamicRow.innerHTML += `<td class="${seasonTheme}Hightlight">${dateNum}</td>`;
         } else {
             // if (dateNum < 32) {
             // }
@@ -134,16 +185,16 @@ function genTableBody(dateNum, table, month, year, todayDate, emptyCols) {
     }
 }
 
-let calendarTopRow = genCalTopRow();
+let month = new Date().getMonth();
+let seasonTheme = getSeasonTheme(month + 1);
+let calendarTopRow = genCalTopRow(seasonTheme);
 container.innerHTML += calendarTopRow;
-
 let table = document.getElementById("calendar");
 let year = new Date().getFullYear();
-let month = new Date().getMonth();
 let todayDate = new Date().getDate();
 let firstDayOfMonth = new Date(year, month, 1).toString();
 let dayName = getDayName(firstDayOfMonth.split(" ")[0]);
 let emptyCols = calcEmptyCols(dayName);
 let dateNum = genCalSecondRow(table, month, year, todayDate, emptyCols);
 
-genTableBody(dateNum, table, month, year, todayDate, emptyCols);
+genTableBody(dateNum, table, month, year, todayDate, emptyCols, seasonTheme);

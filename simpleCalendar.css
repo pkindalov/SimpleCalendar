@@ -1,13 +1,153 @@
-th{
-    border:1px solid black;
+table {
+    border-radius: 5px;
+    padding: 10px;
 }
 
-th,td {
+th {
+    font-size: 90%;
+    /* border: 1px solid black; */
+}
+
+th,
+td {
     padding: 5px;
     text-align: center;
+    border-radius: 5px;
 }
 
-.hightlight{
+.hightlight {
     background-color: coral;
 }
 
+.january {
+    background: linear-gradient(to bottom, #33ccff 0%, #005FBD 60%);
+    color: #FFF;
+}
+
+.januaryHightlight {
+    /* background-color: #33ccff; */
+    background: linear-gradient(to bottom, #005FBD 0%, #33ccff 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.february {
+    background: linear-gradient(to bottom, #a31818 0%, #c37bb1 60%);
+    color: #FFF;
+}
+
+.februaryHightlight {
+    background: linear-gradient(to bottom, #c37bb1 0%, #a31818 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.march {
+    background: linear-gradient(to bottom, #57a760 0%, #97cca5 60%);
+    color: #FFF;
+}
+
+.marchHightlight {
+    background: linear-gradient(to bottom, #97cca5 0%, #57a760 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.april {
+    background: linear-gradient(to bottom, #bec799 0%, #489290 60%);
+    color: #FFF;
+}
+
+.aprilHightlight {
+    background: linear-gradient(to bottom, #489290 0%, #bec799 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.may {
+    background: linear-gradient(to bottom, #93f708 0%, #ebf532 60%);
+    color: #1bc015;
+}
+
+.mayHightlight {
+    background: linear-gradient(to bottom, #ebf532 0%, #93f708 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.june {
+    background: linear-gradient(to bottom, #e3a0f2 20%, #70e0ff 60%);
+    color: #ffec16;
+}
+
+.juneHightlight {
+    background: linear-gradient(to bottom, #70e0ff 0%, #e3a0f2 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.july {
+    background: linear-gradient(to bottom, #a7456d 0%, #353084 60%);
+    color: #e7e8e0;
+}
+
+.julyHightlight {
+    background: linear-gradient(to bottom, #353084 0%, #a7456d 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.august {
+    background: linear-gradient(to bottom, #fce834 20%, #db8c03 65%);
+    color: #174B7D;
+}
+
+.augustHightlight {
+    background: linear-gradient(to bottom, #db8c03 0%, #fce834 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.september {
+    background: linear-gradient(to bottom, #ce3b51 20%, #E1423A 65%);
+    color: #ee9b71;
+}
+
+.septemberHightlight {
+    background: linear-gradient(to bottom, #ce3b51 0%, #ee9b71 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.october {
+    background: linear-gradient(to bottom, #381e1d 20%, #c7160c 65%);
+    color: #f59f0c;
+}
+
+.octoberHightlight {
+    background: linear-gradient(to bottom, #c7160c 0%, #381e1d 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.november {
+    background: linear-gradient(to bottom, #ac430c 20%, #dc7500 65%);
+    color: #ffc31f;
+}
+
+.novemberHightlight {
+    background: linear-gradient(to bottom, #dc7500 0%, #ac430c 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.december {
+    background: linear-gradient(to bottom, #283D3B 20%, #197278 65%);
+    color: #EDDDD4;
+}
+
+.decemberHightlight {
+    background: linear-gradient(to bottom, #197278 0%, #283D3B 150%);
+    font-weight: bold;
+    font-size: 160%;
+}
